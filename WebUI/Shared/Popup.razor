@@ -1,0 +1,15 @@
+@inject AppSettings AppSettings
+@if(ChildContent is not null)
+{
+<div class="popup @_class">
+    <div class="popup_container">
+        @ChildContent
+    </div>
+</div>
+}
+
+@code{
+    [Parameter] public bool Open { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    private string _class => Open ? "open" : "closed";
+}

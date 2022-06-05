@@ -1,0 +1,92 @@
+@use '../basic' as *;
+
+.car-record-container{
+    display: grid;
+    gap: pg(400);
+    font-size: fs(100);
+
+    .title-group{
+        display: none;
+    }
+
+    .box{
+        border: 1px solid black;
+        border-bottom: none;
+        border-left: none;
+        display: grid;
+        transition: box-shadow .2s;
+        &:not(.search-result)
+        {
+            cursor: pointer;
+            &:hover{
+                box-shadow: 0px 0px 5px hsla(0, 0%, 40%);
+            }
+        }
+    }
+    .item-group{
+        border: 1px solid black;
+        border-right: none;
+        border-top: none;
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 150px 1fr;
+    }
+    .list-group{
+        display: grid;
+        gap: pg(50);
+        padding: pg(50);
+        .item{
+            padding: 0;
+        }
+    }
+    .title{
+        background: hsla(150, 0%, 90%);
+        padding: pg(50);
+        border-right: 1px solid black;
+        font-weight: 500;
+    }
+    .item{
+        padding: pg(50);
+    }
+
+    @include mq(sm){
+        font-size: fs(200);
+    }
+    @include mq(lg){
+        border: 1px solid black;
+        border-bottom: none;
+        border-left: none;
+        text-align: center;
+        display: table;
+        width: 100%;
+
+        .box{
+            border: none;
+            display: table-row;
+            background: initial;
+            &:hover:not(.search-result){
+                box-shadow: inset 0px 0px 5px hsla(0, 0%, 40%);
+            }
+        }
+        .item-group{
+            display: table-cell;
+            vertical-align: middle;
+            .title{
+                display: none;
+            }
+        }
+        .title-group{
+            display: table-header-group;
+            background: #ddd;
+            .title{
+                border: 1px solid black;
+                border-top: none;
+                border-right: none;
+                padding: pg(50);
+                display: table-cell;
+                font-weight: 500;
+            }
+        }
+    }
+}
+

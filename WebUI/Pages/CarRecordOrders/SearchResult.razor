@@ -1,0 +1,84 @@
+@attribute [Route(UIRoutes.CarRecordOrders.SearchResult)]
+@inherits SearchResultBase
+
+@if(PageLoaded && Order != null && RecordSearch != null)
+{
+    <div class="page">
+    <div>
+        <b>Search Result for Order #@Order?.Id</b><hr>
+        <b>Search Criterias</b><br>
+        <b>Business Name:</b> <i>@RecordSearch.BusinessName</i><br>
+        <b>Brand:</b> <i>@RecordSearch.CarBrand</i><br>
+        <b>Phone Number:</b> <i>@RecordSearch.Phone.Number</i><br>
+        <b>Contact Name:</b> <i>@RecordSearch.ContactName.FullName</i><br>
+        <b>Address:</b> <i>@RecordSearch.BusinessAddress.Address</i>
+        <hr>
+    </div>
+
+    @if(CarRecords == null || CarRecords.Count() == 0)
+    {
+        <div>No Results Fond</div>
+    }
+    else
+    {
+        <div class="car-record-container">
+            <div class="title-group">
+                <div class="title">Business Name</div>
+                <div class="title">FIN Code</div>
+                <div class="title">Brand</div>
+                <div class="title">Phone Numbers</div>
+                <div class="title">Contacts</div>
+                <div class="title">Address</div>
+            </div>
+            @foreach(var record in CarRecords)
+            {
+            <div class="box search-result">
+                <div class="item-group">
+                    <div class="title">Business Name:</div>
+                    <div class="item">@record.BusinessName</div>
+                </div>
+                <div class="item-group">
+                    <div class="title">FIN Code:</div>
+                    <div class="item">@record.FINCode</div>
+                </div>
+                <div class="item-group">
+                    <div class="title">Brand:</div>
+                    <div class="item">@record.CarBrand</div>
+                </div>
+                <div class="item-group">
+                    <div class="title">Phone Numbers:</div>
+                    <div class="list-group">
+                        @foreach(var phone in record.PhoneNumbers)
+                        {
+                            <div class="item">@phone.Number</div>
+                        }
+                    </div>
+                </div>
+                <div class="item-group">
+                    <div class="title">Contacts:</div>
+                    <div class="list-group">
+                        @foreach(var name in record.ContactNames)
+                        {
+                            <div class="item">
+                                @name.FirstName @name.LastName
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="item-group">
+                    <div class="title">Address:</div>
+                    <div class="item">@record.BusinessAddress.Address</div>
+                </div>
+            </div>
+            }
+        </div>
+    }
+    </div>
+}
+else if(!PageLoaded)
+{
+    <Loading/>
+}
+else{
+    <p>Sorry, there's nothing at this address.</p>
+}

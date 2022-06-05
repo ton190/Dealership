@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+@inject AppSettings AppSettings
+<main>
+    <div class="admin-nav">
+        <NavLink href="" Match=NavLinkMatch.All>Home</NavLink>
+        <NavLink href="@UIRoutes.CarRecordOrders.Search">Search</NavLink>
+        <NavLink href="@UIRoutes.Administration.CarRecords.Index">Administration</NavLink>
+    </div>
+    <hr>
+    @Body
+</main>
+
+@code{
+    protected override void OnInitialized()
+    {
+        AppSettings.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AppSettings.OnChange -= StateHasChanged;
+    }
+}

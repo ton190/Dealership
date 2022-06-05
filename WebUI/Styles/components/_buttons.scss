@@ -1,0 +1,34 @@
+@use '../basic' as *;
+
+.onclick{
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+    }
+}
+
+.link{
+    width: fit-content;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color .2s;
+    &:hover{
+        color: clr(primary, link);
+    }
+    &.noline{
+        text-decoration: none;
+    }
+}
+
+input[type="button"], input[type="submit"]{
+    box-sizing:border-box;
+    padding: pg(50) pg(100);
+    cursor: pointer;
+    border: none;
+    background: hsla(150, 0%, 35%);
+    color: white;
+    transition: background .2s;
+    &:hover{
+        background: hsla(150, 0%, 25%);
+    }
+}

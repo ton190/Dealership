@@ -1,0 +1,31 @@
+@attribute [Route(UIRoutes.Administration.CarBrands.Index)]
+@layout AdminLayout
+@inherits IndexBase
+
+<div class="page">
+    <div class="page-group">
+        <input type="button" value="Add New Brand"
+            @onclick="()=>BrandAction.Create()"/>
+    </div>
+    <div>
+    @if(CarBrands != null && CarBrands.Count > 0)
+    {
+        <ul style="margin:0px; padding-top:0px; padding-left:1em;">
+        @foreach(var brand in CarBrands)
+        {
+            <li class="link noline" @onclick="() => BrandAction.Update(brand)">
+                @brand.Name
+            </li>
+        }
+        </ul>
+    }
+    else if(CarBrands == null)
+    {
+        <Loading/>
+    }
+    </div>
+</div>
+
+<BrandAction Context="item" @ref="BrandAction" OnRefresh="@LoadData">
+    <InputText type="text" @bind-Value="@item.Name" placeholder="Name"/>
+</BrandAction>

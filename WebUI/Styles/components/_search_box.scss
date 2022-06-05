@@ -1,0 +1,5 @@
+.search-box{
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr max-content;
+}

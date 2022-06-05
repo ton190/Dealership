@@ -1,0 +1,10 @@
+global using MediatR;
+global using ModelLibrary.Interfaces;
+global using ModelLibrary.Basic;
+global using Application.Interfaces;
+global using Application.Abstractions;
+global using AutoMapper;
+global using AutoMapper.QueryableExtensions;
+global using FluentValidation;
+global using Microsoft.EntityFrameworkCore;
+global using Domain.Services;

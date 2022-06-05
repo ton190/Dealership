@@ -1,0 +1,52 @@
+@use '../basic' as *;
+
+.form{
+    display: grid;
+    gap: pg(200);
+
+    fieldset{
+        display: grid;
+        padding: pg(200);
+        gap: pg(100);
+    }
+
+    .form-group{
+        display: grid;
+        gap: pg(200);
+        align-items: center;
+        &.column{
+            grid-auto-flow: column;
+            grid-template-columns: max-content auto;
+        }
+    }
+    .form-buttons{
+        display: grid;
+        gap: .5rem;
+    }
+}
+
+input, select{
+    font-family: inherit;
+    font-size: inherit;
+    padding: pg(50);
+}
+
+
+input[type="text"], input[type="number"], select{
+    background: white;
+    outline: none !important;
+    border: none;
+    transition: box-shadow .2s linear;
+    box-shadow: black 0px 0px 5px;
+    &:focus{
+        box-shadow: black 0px 0px 5px 2px;
+    }
+}
+input, select{
+    &.invalid{
+        box-shadow: red 0px 0px 5px;
+        &:focus{
+            box-shadow: red 0px 0px 5px 2px;
+        }
+    }
+}

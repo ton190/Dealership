@@ -1,0 +1,29 @@
+@use '../basic/' as *;
+
+.page{
+    display: grid;
+    gap: pg(400);
+    padding: pg(200);
+}
+
+.page-group{
+    display: grid;
+    gap: pg(200);
+    position: sticky;
+    top: 0;
+    background: white;
+    padding-top: pg(200);
+}
+
+.admin-nav{
+    padding: pg(200);
+    a{
+        color: inherit;
+        &:hover{
+            color: clr(primary, link);
+        }
+        &.active{
+            color: clr(primary, link);
+        }
+    }
+}

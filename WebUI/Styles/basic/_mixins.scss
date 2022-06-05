@@ -1,0 +1,65 @@
+@import 'colors';
+
+//**********************
+//***** Mixins *********
+//**********************
+@mixin mq($key)
+{
+    $size: map-get($breakpoints, $key);
+    @media only screen and (min-width: $size){
+        @content;
+    }
+}
+//Root Scale
+@mixin base-root{
+    @each $color, $shades in $colors{
+        @each $shade, $value in $shades
+            {
+            --clr-#{$color}-#{$shade}: #{$value};
+            }
+    }
+    @include set-scale(fs, $font-base, $scale-font);
+    @include set-scale(pg, $padding-base, $scale-padding);
+
+    @each $key, $value in $breakpoints{
+        $font-base : $font-base * $media-scale;
+        $padding-base : $padding-base * $media-scale;
+        @include mq($key)
+        {
+        @include set-scale(fs, $font-base, $scale-font);
+        @include set-scale(pg, $padding-base, $scale-padding);
+        }
+    }
+}
+//Scale Fonts
+@mixin set-scale($par, $base, $scale){
+    --scale-#{$par}: #{$scale};
+    --#{$par}-50: calc(var(--#{$par}-100) / 2);
+    --#{$par}-100: calc(#{$base} / var(--scale-#{$par}));
+    @for $i from 1 through 8{
+    --#{$par}-#{$i+1}00: calc(var(--#{$par}-#{$i}00) * var(--scale-#{$par}));
+    }
+}
+//**********************
+//***** Functions ******
+//**********************
+//Get Font Size
+@function fs($key){
+    @return var(--fs-#{$key});
+}
+//Get Padding Size
+@function pg($key){
+    @return var(--pg-#{$key});
+}
+//Get Color Map
+@function clr($color, $shade, $o:1){
+    $return: map-get($colors, $color, $shade);
+    @if($o != 1){
+       $return: change-color($return, $alpha: $o);
+    }
+    @return $return;
+}
+//Get MQ
+@function getmq($key, $change:0){
+    @return map-get($breakpoints, $key) + $change;
+}

@@ -1,0 +1,70 @@
+@attribute [Route(UIRoutes.Administration.CarRecords.Index)]
+@layout AdminLayout
+@using Domain.Enums
+@inherits IndexBase
+
+<div class="page">
+    <div class="page-group">
+        <input @oninput="(e) => OnSearch(e)" type="text" placeholder="Search"/>
+        <input type="button" value="Add New Record"
+               @onclick="()=>RecordAction.Create()"/>
+    </div>
+
+    @if(CarRecords != null && DisplayCarRecords!.Count() > 0)
+    {
+    <div class="car-record-container">
+        <div class="title-group">
+            <div class="title">Business Name</div>
+            <div class="title">FIN Code</div>
+            <div class="title">Brand</div>
+            <div class="title">Phone Numbers</div>
+            <div class="title">Contacts</div>
+            <div class="title">Address</div>
+        </div>
+    <Virtualize Items="@DisplayCarRecords" Context="record" OverscanCount="4">
+        <div class="box" @onclick="()=>RecordAction.Update(record)">
+            <div class="item-group">
+                <div class="title">Business Name:</div>
+                <div class="item">@record.BusinessName</div>
+            </div>
+            <div class="item-group">
+                <div class="title">FIN Code:</div>
+                <div class="item">@record.FINCode</div>
+            </div>
+            <div class="item-group">
+                <div class="title">Brand:</div>
+                <div class="item">@record.CarBrand</div>
+            </div>
+            <div class="item-group">
+                <div class="title">Phone Numbers:</div>
+                <div class="list-group">
+                    @foreach(var phone in record.PhoneNumbers)
+                    {
+                        <div class="item">@phone.Number</div>
+                    }
+                </div>
+            </div>
+            <div class="item-group">
+                <div class="title">Contacts:</div>
+                <div class="list-group">
+                    @foreach(var name in record.ContactNames)
+                    {
+                        <div class="item">@name.FirstName @name.LastName</div>
+                    }
+                </div>
+            </div>
+            <div class="item-group">
+                <div class="title">Address:</div>
+                <div class="item">@record.BusinessAddress.Address</div>
+            </div>
+        </div>
+    </Virtualize>
+    </div>
+    }
+    else if(CarRecords == null)
+    {
+        <Loading/>
+    }
+</div>
+<RecordAction CarBrands="@CarBrands" OnRefresh="@Refresh"
+    @ref="@RecordAction"/>

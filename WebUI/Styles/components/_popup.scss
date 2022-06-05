@@ -1,0 +1,19 @@
+@use '../basic/' as *;
+
+.popup{
+    position: fixed;
+    overflow-y: scroll;
+    inset: 0;
+    display: none;
+    background: hsla(150, 0%, 90%);
+
+    &.open{
+        display: grid;
+    }
+
+    .popup_container{
+        padding: pg(200);
+        display: grid;
+        align-items: start;
+    }
+}

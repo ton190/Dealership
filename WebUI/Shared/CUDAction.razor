@@ -1,0 +1,24 @@
+@typeparam TDto where TDto : BaseDto, new()
+
+@if(ChildContent != null && EditContext != null)
+{
+<Popup Open=true>
+<EditForm
+    EditContext="@EditContext" class="form"
+    OnSubmit="OnSubmit">
+    <FluentValidationValidator />
+        @ChildContent((TDto)EditContext.Model)
+    @if(UpdateModel is null)
+    {
+        <input type="submit" value="@($"Add {EntityName}")"/>
+    }
+    else
+    {
+    <input type="submit" value="@($"Update {EntityName}")"/>
+    <input type="button" value="@($"Remove {EntityName}")" @onclick="@OnRemove"/>
+    }
+    <input type="button" value="Cancel" @onclick="@Clear"/>
+    <ValidationSummary />
+</EditForm>
+</Popup>
+}
