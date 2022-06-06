@@ -3,40 +3,61 @@
 @using Domain.Enums
 @inherits IndexBase
 
+<div class="page-group">
+    <input @oninput="(e) => OnSearch(e)" type="text" placeholder="Search"/>
+    <input type="button" value="Add New Record"
+           @onclick="()=>RecordAction.Create()"/>
+</div>
 <div class="page">
-    <div class="page-group">
-        <input @oninput="(e) => OnSearch(e)" type="text" placeholder="Search"/>
-        <input type="button" value="Add New Record"
-               @onclick="()=>RecordAction.Create()"/>
-    </div>
-
-    @if(CarRecords != null && DisplayCarRecords!.Count() > 0)
+    @if(CarRecords != null && CarRecords!.Count() > 0)
     {
-    <div class="car-record-container">
+    <div>
+        Total Records: @CarRecords.Count()<br>
+        New Records:
+        @CarRecords.Where(x => x.DateCreated > Time.Now.AddDays(-1)).Count()
+    </div>
+    <div class="pag-list">
+        @if(TotalPages > 1)
+        {
+            foreach(var box in PagBoxes)
+            {
+                if(Page == box.Id)
+                {
+                    <span class="selected">[ @box.Id ]</span>
+                }
+                else
+                {
+                    <span key="box" @onclick="box.Action">@(box.Id)</span>
+                }
+            }
+        }
+    </div>
+    <div class="car-record-container visual">
         <div class="title-group">
-            <div class="title">Business Name</div>
-            <div class="title">FIN Code</div>
-            <div class="title">Brand</div>
-            <div class="title">Phone Numbers</div>
-            <div class="title">Contacts</div>
-            <div class="title">Address</div>
+            <div class="title t1">Business Name</div>
+            <div class="title t2">FIN Code</div>
+            <div class="title t3">Brand</div>
+            <div class="title t4">Phone Numbers</div>
+            <div class="title t5">Contacts</div>
+            <div class="title t6">Address</div>
         </div>
-    <Virtualize Items="@DisplayCarRecords" Context="record" OverscanCount="4">
+    @foreach(var record in CarRecordList!)
+    {
         <div class="box" @onclick="()=>RecordAction.Update(record)">
             <div class="item-group">
-                <div class="title">Business Name:</div>
+                <div class="title">Business Name</div>
                 <div class="item">@record.BusinessName</div>
             </div>
             <div class="item-group">
-                <div class="title">FIN Code:</div>
+                <div class="title">FIN Code</div>
                 <div class="item">@record.FINCode</div>
             </div>
             <div class="item-group">
-                <div class="title">Brand:</div>
+                <div class="title">Brand</div>
                 <div class="item">@record.CarBrand</div>
             </div>
             <div class="item-group">
-                <div class="title">Phone Numbers:</div>
+                <div class="title">Phone Numbers</div>
                 <div class="list-group">
                     @foreach(var phone in record.PhoneNumbers)
                     {
@@ -45,7 +66,7 @@
                 </div>
             </div>
             <div class="item-group">
-                <div class="title">Contacts:</div>
+                <div class="title">Contacts</div>
                 <div class="list-group">
                     @foreach(var name in record.ContactNames)
                     {
@@ -54,11 +75,11 @@
                 </div>
             </div>
             <div class="item-group">
-                <div class="title">Address:</div>
+                <div class="title">Address</div>
                 <div class="item">@record.BusinessAddress.Address</div>
             </div>
         </div>
-    </Virtualize>
+    }
     </div>
     }
     else if(CarRecords == null)

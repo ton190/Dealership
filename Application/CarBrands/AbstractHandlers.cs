@@ -10,9 +10,7 @@ public class CreateCarBrandHandler
         IAppDbContext dbContext,
         IMapper mapper,
         IValidator<CarBrandDto> validator)
-        : base(dbContext, mapper, validator)
-    {
-    }
+        : base(dbContext, mapper, validator){}
 }
 
 public class UpdateCarBrandHandler
@@ -22,37 +20,24 @@ public class UpdateCarBrandHandler
         IAppDbContext dbContext,
         IMapper mapper,
         IValidator<CarBrandDto> validator)
-        : base(dbContext, mapper, validator)
-    {
-    }
+        : base(dbContext, mapper, validator){}
 
     protected override IQueryable<CarBrand> OnBefore(
-        IQueryable<CarBrand> request)
-    {
-        return request.Include(x => x.CarRecords);
-    }
+        IQueryable<CarBrand> request) => request.Include(x => x.CarRecords);
 }
 
 public class RemoveCarBrandHandler
     : RemoveHandler<RemoveCarBrandModel, CarBrand, bool>
 {
-    public RemoveCarBrandHandler(IAppDbContext dbContext) : base(dbContext)
-    {
-    }
+    public RemoveCarBrandHandler(IAppDbContext dbContext) : base(dbContext){}
 
     protected override IQueryable<CarBrand> OnBefore(
-        IQueryable<CarBrand> request)
-    {
-        return request.Include(x => x.CarRecords);
-    }
+        IQueryable<CarBrand> request) => request.Include(x => x.CarRecords);
 }
 
 public class GetAllCarBrandsHandler
     : GetAllHandler<GetAllCarBrandsModel, CarBrand, CarBrandDto>
 {
     public GetAllCarBrandsHandler(
-        IAppDbContext dbContext, IMapper mapper)
-        : base(dbContext, mapper)
-    {
-    }
+        IAppDbContext dbContext, IMapper mapper) : base(dbContext, mapper){}
 }

@@ -13,7 +13,10 @@ public static partial class DependencyInjection
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
             services.AddDbContext<AppDbContext>(options =>
-            options.UseInMemoryDatabase("Dealership"));
+            {
+                options.UseInMemoryDatabase("Dealership");
+                options.EnableSensitiveDataLogging();
+            });
         }
         else
         {

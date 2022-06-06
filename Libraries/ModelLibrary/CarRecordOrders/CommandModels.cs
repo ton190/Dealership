@@ -6,3 +6,6 @@ public record CreateCarRecordOrderModel(
 
 public record GetCarRecordOrderByTokenModel(string Token)
     : IRequest<RequestResponse<CarRecordOrderDto>>;
+
+public record GetAllCarRecordOrdersModel()
+    : IGetAllModel<CarRecordOrderDto>;

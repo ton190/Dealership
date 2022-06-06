@@ -15,10 +15,10 @@ public class RemoveHandler<TModel, TEntity, TResponse>
         TModel model, CancellationToken ct)
     {
         var query = OnBefore(_dbContext.Set<TEntity>().AsQueryable());
-        var item = await query.FirstOrDefaultAsync(x => x.Id == model.Id);
-        if (item is null) return new(false, new("Database error"));
+        var entity = await query.FirstOrDefaultAsync(x => x.Id == model.Id);
+        if (entity is null) return new(false, new("Database error"));
 
-        _dbContext.Set<TEntity>().Remove(item);
+        _dbContext.Set<TEntity>().Remove(entity);
         var result = await _dbContext.SaveChangesAsync(ct) > 0;
         if (!result) return new(false, new("Database error"));
 

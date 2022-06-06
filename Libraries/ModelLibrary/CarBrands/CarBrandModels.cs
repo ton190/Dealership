@@ -10,7 +10,5 @@ public record RemoveCarBrandModel(int Id)
     : IRemoveModel<bool>;
 
 public record GetAllCarBrandsModel()
-    : IGetAllModel<CarBrandDto>
-{
-}
+    : IGetAllModel<CarBrandDto>;
 

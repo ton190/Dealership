@@ -21,7 +21,9 @@ public class GetAllHandler<TModel, TEntity, TDto>
         TModel model, CancellationToken ct)
     {
         var query = _dbContext.Set<TEntity>().AsNoTracking();
-        var request = OnBefore(query).ProjectTo<TDto>(_mapper.ConfigurationProvider);
+        var request = OnBefore(query)
+            .ProjectTo<TDto>(_mapper.ConfigurationProvider);
+
         return new(true, null, await request.ToListAsync(ct));
     }
 

@@ -3,27 +3,26 @@
 @inherits IndexBase
 
 <div class="page">
-    <div class="page-group">
         <input type="button" value="Add New Brand"
             @onclick="()=>BrandAction.Create()"/>
-    </div>
-    <div>
     @if(CarBrands != null && CarBrands.Count > 0)
     {
-        <ul style="margin:0px; padding-top:0px; padding-left:1em;">
-        @foreach(var brand in CarBrands)
+    <div>
+        Total Records: @CarBrands.Count()<br>
+    </div>
+    <ul style="margin:0px; padding-top:0px; padding-left:1em;">
+        @foreach(var box in BrandBoxes)
         {
-            <li class="link noline" @onclick="() => BrandAction.Update(brand)">
-                @brand.Name
+            <li @key="box" class="link noline" @onclick="box.Action">
+                @box.Brand?.Name
             </li>
         }
-        </ul>
+    </ul>
     }
     else if(CarBrands == null)
     {
         <Loading/>
     }
-    </div>
 </div>
 
 <BrandAction Context="item" @ref="BrandAction" OnRefresh="@LoadData">

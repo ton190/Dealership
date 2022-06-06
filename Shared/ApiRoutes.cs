@@ -33,5 +33,6 @@ public static class ApiRoutes
         public const string Create = $"{Base}create/";
         public const string Search = $"{Base}search/";
         public const string GetByToken = $"{Base}getbytoken/";
+        public const string GetAll = $"{Base}getall/";
     }
 }

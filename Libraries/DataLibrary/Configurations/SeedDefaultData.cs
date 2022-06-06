@@ -1,4 +1,5 @@
 using Domain.Enums;
+using Domain.Services;
 using EntityLibrary.CarRecords;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,64 +14,97 @@ public static class DbExtensions
             new
             {
                 Id = 1,
-                Name = "Lexus"
+                Name = "Lexus",
+                DateCreated = Time.Now,
+                DateModified = Time.Now
             },
             new
             {
                 Id = 2,
-                Name = "BMW"
+                Name = "BMW",
+                DateCreated = Time.Now,
+                DateModified = Time.Now
             }
         });
 
         builder.Entity<CarRecord>(x =>
-        {
-            x.HasData(new[]
-            {
+         {
+             for (int i = 1; i < 100; i++)
+             {
+                 x.HasData(new[]
+                {
                 new
                 {
-                    Id = 1,
-                    BusinessName = "Poganka Studio",
+                    Id = i,
+                    BusinessName = "Poganka Studio "+ i ,
                     FINCode = "123456",
                     CarBrand = "Lexus",
+                    DateCreated = Time.Now,
+                    DateModified = Time.Now
                 }
-            });
-            x.OwnsOne(x => x.BusinessAddress).HasData(new
-            {
-                Id = 1,
-                CarRecordId = 1,
-                Province = ProvinceEnum.ON,
-                City = "Toronto",
-                PostalCode = "M2J4Y2",
-                StreetName = "Bond Lake Park Street",
-                BuildingNumber = "17",
-                UnitNumber =""
-            });
-            x.OwnsMany(x => x.ContactNames).HasData(new[]
-            {
-                new
+             });
+                 x.OwnsOne(x => x.BusinessAddress).HasData(new
+                 {
+                     CarRecordId = i,
+                     Province = ProvinceEnum.ON,
+                     City = "Toronto",
+                     PostalCode = "M2J4Y2",
+                     StreetName = "Bond Lake Park Street",
+                     BuildingNumber = "17",
+                     UnitNumber = ""
+                 });
+                 x.OwnsMany(x => x.ContactNames).HasData(new[]
                 {
-                    Id = 1,
-                    CarRecordId = 1,
-                    FirstName = "Anton",
-                    LastName = "Arlazarov"
-                },
-                new
+                    new
+                    {
+                        Id = i,
+                        CarRecordId = i,
+                        FirstName = "Anton",
+                        LastName = "Arlazarov",
+                        DateCreated = Time.Now,
+                        DateModified = Time.Now
+                    },
+                    new
+                    {
+                        Id = i+1,
+                        CarRecordId = i,
+                        FirstName = "Alina",
+                        LastName = "Sagaliyeva",
+                        DateCreated = Time.Now,
+                        DateModified = Time.Now
+                    }
+                 });
+                 x.OwnsMany(x => x.PhoneNumbers).HasData(new[]
                 {
-                    Id = 2,
-                    CarRecordId = 1,
-                    FirstName = "Alina",
-                    LastName = "Sagaliyeva"
-                }
-            });
-            x.OwnsMany(x => x.PhoneNumbers).HasData(new[]
+                    new
+                    {
+                        Id = i,
+                        CarRecordId = i,
+                        Number = "4054318541",
+                        DateCreated = Time.Now,
+                        DateModified = Time.Now
+                    }
+                 });
+             };
+         });
+
+        builder.Entity<CarRecordOrder>(x =>
+        {
+            for (int i = 1; i < 100; i++)
             {
-                new
+                x.HasData(new[]
                 {
-                    Id = 1,
-                    CarRecordId = 1,
-                    Number = "4054318541"
-                }
-            });
+                    new{
+                        Id = i,
+                        Email = $"test_email{i}@test.com",
+                        Paid = false,
+                        SearchResult = "",
+                        RecordSearch = "",
+                        DateCreated = Time.Now,
+                        DateModified = Time.Now
+                        }
+                });
+            };
         });
 
         return builder;

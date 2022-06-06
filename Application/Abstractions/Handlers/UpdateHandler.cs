@@ -30,10 +30,10 @@ public class UpdateHandler<TModel, TEntity, TDto, TResponse>
             return new(false, validator.Errors.ToRequestErrors());
 
         var query = OnBefore(_dbContext.Set<TEntity>().AsQueryable());
-        var item = await query.FirstOrDefaultAsync(x => x.Id == model.Dto.Id);
-        if (item is null) return new(false, new("Database Error, wrong Id"));
+        var entity = await query.FirstOrDefaultAsync(x => x.Id == model.Dto.Id);
+        if (entity is null) return new(false, new("Database Error, wrong Id"));
 
-        _mapper.Map<TDto, TEntity>(model.Dto, item);
+        _mapper.Map<TDto, TEntity>(model.Dto, entity);
 
         var result = await _dbContext.SaveChangesAsync(ct) > 0;
         if (!result) return new(false, new("Database error"));

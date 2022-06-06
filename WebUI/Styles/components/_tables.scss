@@ -1,20 +1,18 @@
 @use '../basic' as *;
 
-.car-record-container{
+.car-record-container {
     display: grid;
-    gap: pg(400);
     font-size: fs(100);
+    gap: pg(400);
 
     .title-group{
         display: none;
     }
-
     .box{
         border: 1px solid black;
         border-bottom: none;
         border-left: none;
         display: grid;
-        transition: box-shadow .2s;
         &:not(.search-result)
         {
             cursor: pointer;
@@ -44,6 +42,7 @@
         padding: pg(50);
         border-right: 1px solid black;
         font-weight: 500;
+        white-space: nowrap;
     }
     .item{
         padding: pg(50);
@@ -65,7 +64,7 @@
             display: table-row;
             background: initial;
             &:hover:not(.search-result){
-                box-shadow: inset 0px 0px 5px hsla(0, 0%, 40%);
+                box-shadow: inset 0px 0px 5px 2px hsla(0, 0%, 40%);
             }
         }
         .item-group{
@@ -87,6 +86,22 @@
                 font-weight: 500;
             }
         }
+        .t1{
+            max-width: 300px;
+        }
+        .t2{
+            max-width: 100px;
+        }
+        .t3{
+            max-width: 100px;
+        }
+        .t4{
+            max-width: 100px;
+        }
+        .t5{
+            max-width: 200px;
+        }
+        .t6{
+        }
     }
 }
-

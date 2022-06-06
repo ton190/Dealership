@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components.Web;
 using ModelLibrary.CarBrands;
 using ModelLibrary.CarRecords;
 
@@ -8,13 +9,41 @@ public class IndexBase : ComponentBase
     [Inject] ApiRequest ApiRequest { get; set; } = null!;
     protected RecordActionBase RecordAction { get; set; } = null!;
     protected List<CarRecordDto>? CarRecords { get; set; }
-    protected List<CarRecordDto>? DisplayCarRecords { get; set; }
     protected List<CarBrandDto> CarBrands { get; set; } = new();
     protected string _searchString { get; set; } = string.Empty;
+
+    private int page = 1;
+    protected int Page
+    {
+        get => page <= TotalPages ? page : TotalPages;
+        set => page = value;
+    }
+    protected int PageSize { get; set; } = 10;
+    protected int TotalPages =>
+        (int)Math.Ceiling(Search(CarRecords).Count() / (double)PageSize);
+    protected List<PagBox> PagBoxes { get; set; } = new();
+
+    private void SetBoxHandlers()
+    {
+        PagBoxes = new();
+        for (var i = 1; i < TotalPages+1; i++)
+        {
+            var temp = i;
+            var box = new PagBox();
+            box.Id = i;
+            box.Action = (e) => Page = temp;
+            PagBoxes.Add(box);
+        }
+    }
+
+    protected List<CarRecordDto> CarRecordList
+        => Search(CarRecords).Skip((Page - 1) * PageSize)
+        .Take(PageSize).ToList();
 
     protected async Task Refresh()
     {
         await GetRecords();
+        SetBoxHandlers();
         StateHasChanged();
     }
 
@@ -22,6 +51,7 @@ public class IndexBase : ComponentBase
     {
         await GetBrands();
         await GetRecords();
+        SetBoxHandlers();
     }
 
     protected async Task GetRecords()
@@ -32,7 +62,6 @@ public class IndexBase : ComponentBase
 
         if (request != null && request.Success && request.Response != null)
             CarRecords = request.Response;
-        Search();
     }
 
     protected string GetBrandName(int id)
@@ -53,24 +82,23 @@ public class IndexBase : ComponentBase
 
     protected void OnSearch(ChangeEventArgs args)
     {
-        if(args.Value is null) return;
+        if (args.Value is null) return;
 
         _searchString = (string)args.Value;
-        Search();
+        SetBoxHandlers();
     }
 
-    private void Search()
+    private List<CarRecordDto> Search(List<CarRecordDto>? records)
     {
-        if(CarRecords is null) return;
+        if (records is null) return new();
 
         if (_searchString == "")
         {
-            DisplayCarRecords = CarRecords;
-            return;
+            return records;
         }
-        List<CarRecordDto> records = new();
+        List<CarRecordDto> newRecords = new();
 
-        records.AddRange(CarRecords.Where(x => x.BusinessName.Contains(
+        newRecords.AddRange(records.Where(x => x.BusinessName.Contains(
             _searchString, StringComparison.OrdinalIgnoreCase) ||
             x.FINCode.Contains(
             _searchString, StringComparison.OrdinalIgnoreCase) ||
@@ -86,6 +114,12 @@ public class IndexBase : ComponentBase
             x.PhoneNumbers.Any(x => x.Number.Contains(
             _searchString, StringComparison.OrdinalIgnoreCase))));
 
-        DisplayCarRecords = records;
+        return newRecords;
+    }
+
+    protected class PagBox
+    {
+        public int Id { get; set; }
+        public Action<MouseEventArgs> Action { get; set; } = e => { };
     }
 }

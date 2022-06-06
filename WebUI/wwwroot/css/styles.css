@@ -125,6 +125,20 @@ body {
   gap: var(--pg-400);
   padding: var(--pg-200);
 }
+.page .pag-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+.page .pag-list span {
+  min-width: 2.5em;
+  display: grid;
+  justify-content: center;
+  cursor: pointer;
+}
+.page .pag-list span:hover:not(.selected) {
+  text-decoration: underline;
+}
 
 .page-group {
   display: grid;
@@ -132,7 +146,7 @@ body {
   position: sticky;
   top: 0;
   background: white;
-  padding-top: var(--pg-200);
+  padding: var(--pg-200);
 }
 
 .admin-nav {
@@ -250,8 +264,8 @@ input[type=button]:hover, input[type=submit]:hover {
 
 .car-record-container {
   display: grid;
-  gap: var(--pg-400);
   font-size: var(--fs-100);
+  gap: var(--pg-400);
 }
 .car-record-container .title-group {
   display: none;
@@ -261,7 +275,6 @@ input[type=button]:hover, input[type=submit]:hover {
   border-bottom: none;
   border-left: none;
   display: grid;
-  transition: box-shadow 0.2s;
 }
 .car-record-container .box:not(.search-result) {
   cursor: pointer;
@@ -290,6 +303,7 @@ input[type=button]:hover, input[type=submit]:hover {
   padding: var(--pg-50);
   border-right: 1px solid black;
   font-weight: 500;
+  white-space: nowrap;
 }
 .car-record-container .item {
   padding: var(--pg-50);
@@ -314,7 +328,7 @@ input[type=button]:hover, input[type=submit]:hover {
     background: initial;
   }
   .car-record-container .box:hover:not(.search-result) {
-    box-shadow: inset 0px 0px 5px hsl(0deg, 0%, 40%);
+    box-shadow: inset 0px 0px 5px 2px hsl(0deg, 0%, 40%);
   }
   .car-record-container .item-group {
     display: table-cell;
@@ -334,6 +348,21 @@ input[type=button]:hover, input[type=submit]:hover {
     padding: var(--pg-50);
     display: table-cell;
     font-weight: 500;
+  }
+  .car-record-container .t1 {
+    max-width: 300px;
+  }
+  .car-record-container .t2 {
+    max-width: 100px;
+  }
+  .car-record-container .t3 {
+    max-width: 100px;
+  }
+  .car-record-container .t4 {
+    max-width: 100px;
+  }
+  .car-record-container .t5 {
+    max-width: 200px;
   }
 }
 

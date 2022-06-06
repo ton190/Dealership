@@ -16,16 +16,22 @@ public class CarRecordOrdersController : BasicControllerBase
         var dbList = await GetCarRecords();
         if (dbList is null) return BadRequest();
 
-        return Ok(await BasicAction<CreateCarRecordOrderModel, string>(
-            new(dto, dbList)));
+        return await BasicAction<CreateCarRecordOrderModel, string>(
+            new(dto, dbList));
     }
 
     [HttpGet(ApiRoutes.CarRecordOrders.GetByToken)]
     public async Task<IActionResult> GetCarRecordOrderByToken(
-        [FromQuery]string token)
-        => Ok(await BasicAction<GetCarRecordOrderByTokenModel,
-            CarRecordOrderDto>(new(token)));
+        [FromQuery] string token)
+        => await BasicAction<GetCarRecordOrderByTokenModel,
+            CarRecordOrderDto>(new(token));
 
+    [HttpGet(ApiRoutes.CarRecordOrders.GetAll)]
+    public async Task<IActionResult> GetAllCarRecordOrders()
+        => await BasicAction<
+            GetAllCarRecordOrdersModel, List<CarRecordOrderDto>>(new());
+
+    //Get Car Records
     private async Task<List<CarRecordDto>?> GetCarRecords()
     {
         var request = await BasicGetAction<GetAllCarRecordsModel,

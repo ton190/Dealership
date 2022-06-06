@@ -10,9 +10,7 @@ public class CreateCarRecordHandler
         IAppDbContext dbContext,
         IMapper mapper,
         IValidator<CarRecordDto> validator)
-        : base(dbContext, mapper, validator)
-    {
-    }
+        : base(dbContext, mapper, validator){}
 }
 
 public class UpdateCarRecordHandler
@@ -22,26 +20,19 @@ public class UpdateCarRecordHandler
         IAppDbContext dbContext,
         IMapper mapper,
         IValidator<CarRecordDto> validator)
-        : base(dbContext, mapper, validator)
-    {
-    }
+        : base(dbContext, mapper, validator){}
 }
 
 
 public class RemoveCarRecordHandler
     : RemoveHandler<RemoveCarRecordModel, CarRecord, bool>
 {
-    public RemoveCarRecordHandler(IAppDbContext dbContext) : base(dbContext)
-    {
-    }
+    public RemoveCarRecordHandler(IAppDbContext dbContext) : base(dbContext){}
 }
 
 public class GetAllCarRecordsHandler
     : GetAllHandler<GetAllCarRecordsModel, CarRecord, CarRecordDto>
 {
     public GetAllCarRecordsHandler(
-        IAppDbContext dbContext, IMapper mapper)
-        : base(dbContext, mapper)
-    {
-    }
+        IAppDbContext dbContext, IMapper mapper) : base(dbContext, mapper){}
 }

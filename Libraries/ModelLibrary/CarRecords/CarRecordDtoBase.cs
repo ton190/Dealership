@@ -28,11 +28,9 @@ public abstract class CarRecordDtoBaseValidator<TDto> : AbstractValidator<TDto>
                 .WithMessage("Incorrect Business Name format");
         });
 
-
         RuleFor(x => x.CarBrand)
             .NotEmpty()
             .WithMessage("Car Brand not selected");
-
 
         RuleFor(x => x.BusinessAddress)
             .SetValidator(new AddressDtoValidator(searchModel));

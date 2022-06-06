@@ -29,8 +29,8 @@ public abstract class CreateHandler<TModel, TEntity, TDto, TResponse>
         if(!validator.IsValid)
             return new(false, validator.Errors.ToRequestErrors());
 
-        var item = _mapper.Map<TDto, TEntity>(model.Dto);
-        await _dbContext.Set<TEntity>().AddAsync(item);
+        var entity = _mapper.Map<TDto, TEntity>(model.Dto);
+        await _dbContext.Set<TEntity>().AddAsync(entity);
         var result = await _dbContext.SaveChangesAsync(ct) > 0;
 
         if (!result) return new(false, new("Database error"));

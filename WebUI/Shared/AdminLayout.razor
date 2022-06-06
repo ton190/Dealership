@@ -3,9 +3,11 @@
 @inject AppSettings AppSettings
 <main>
     <div class="admin-nav">
-        <NavLink href="" Match=NavLinkMatch.All>Home</NavLink>
-        <NavLink href="/administration/carbrands">Brands</NavLink>
-        <NavLink href="/administration/carrecords">Records</NavLink>
+        <NavLink href="" Match=NavLinkMatch.All>Home</NavLink>&nbsp;
+        <NavLink Match=NavLinkMatch.All href="@UIRoutes.Administration.Index">Administration</NavLink>&nbsp;
+        <NavLink href="@UIRoutes.Administration.CarBrands.Index">Brands</NavLink>&nbsp;
+        <NavLink href="@UIRoutes.Administration.CarRecords.Index">Records</NavLink>&nbsp;
+        <NavLink href="@UIRoutes.Administration.CarRecordOrders.Index">Orders</NavLink>
     </div>
     <hr>
     @Body

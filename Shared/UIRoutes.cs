@@ -5,6 +5,7 @@ public static class UIRoutes
     public static class Administration
     {
         private const string Root = $"/administration/";
+        public const string Index = $"{Root}";
 
         public static class CarBrands
         {
@@ -16,7 +17,11 @@ public static class UIRoutes
             private const string Base = $"{Root}carrecords/";
             public const string Index = $"{Base}";
         }
-
+        public static class CarRecordOrders
+        {
+            private const string Base = $"{Root}carrecordorders/";
+            public const string Index = $"{Base}";
+        }
     }
     public static class CarRecordOrders
     {

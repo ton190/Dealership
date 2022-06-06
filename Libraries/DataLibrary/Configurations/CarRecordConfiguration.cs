@@ -9,7 +9,6 @@ public class CarRecordConfiguration : IEntityTypeConfiguration<CarRecord>
     public void Configure(EntityTypeBuilder<CarRecord> builder)
     {
         builder.Property(x => x.BusinessName).IsRequired();
-
         builder.OwnsMany(x => x.PhoneNumbers, y =>
         {
             y.Property( z => z.Number).IsRequired();

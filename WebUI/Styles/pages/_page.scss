@@ -4,6 +4,21 @@
     display: grid;
     gap: pg(400);
     padding: pg(200);
+
+    .pag-list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        span{
+            min-width: 2.5em;
+            display: grid;
+            justify-content:center;
+            cursor: pointer;
+            &:hover:not(.selected){
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 .page-group{
@@ -12,7 +27,7 @@
     position: sticky;
     top: 0;
     background: white;
-    padding-top: pg(200);
+    padding: pg(200);
 }
 
 .admin-nav{

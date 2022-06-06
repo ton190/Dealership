@@ -7,6 +7,8 @@
     <div>
         <b>Search Result for Order #@Order?.Id</b><hr>
         <b>Search Criterias</b><br>
+        <b>Order Date: </b>
+            <i>@Order?.DateCreated.ToString("MM/dd/yyyy")</i><br>
         <b>Business Name:</b> <i>@RecordSearch.BusinessName</i><br>
         <b>Brand:</b> <i>@RecordSearch.CarBrand</i><br>
         <b>Phone Number:</b> <i>@RecordSearch.Phone.Number</i><br>
