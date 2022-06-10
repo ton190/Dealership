@@ -148,6 +148,13 @@ body {
   background: white;
   padding: var(--pg-200);
 }
+.page-group .search-box {
+  display: grid;
+  justify-content: center;
+}
+.page-group .search-box input[type=button] {
+  box-shadow: hsl(150deg, 0%, 35%) 0px 0px 0px 1px;
+}
 
 .admin-nav {
   padding: var(--pg-200);
@@ -232,6 +239,9 @@ input.invalid:focus, select.invalid:focus {
 .link.noline {
   text-decoration: none;
 }
+.link.selected {
+  color: hsl(200deg, 50%, 50%);
+}
 
 input[type=button], input[type=submit] {
   box-sizing: border-box;
@@ -263,6 +273,7 @@ input[type=button]:hover, input[type=submit]:hover {
 }
 
 .car-record-container {
+  margin-top: calc(var(--pg-400) * -1);
   display: grid;
   font-size: var(--fs-100);
   gap: var(--pg-400);
@@ -315,6 +326,7 @@ input[type=button]:hover, input[type=submit]:hover {
 }
 @media only screen and (min-width: 1000px) {
   .car-record-container {
+    margin-top: 0;
     border: 1px solid black;
     border-bottom: none;
     border-left: none;

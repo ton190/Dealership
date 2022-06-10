@@ -2,33 +2,102 @@
 @layout AdminLayout
 @inherits IndexBase
 
+<div class="page-group">
+    <div class="search-box">
+        <input type="text" @bind="@Search"
+            placeholder="Search"/>
+        <input type="button" value="Search" @onclick="Refresh"/>
+    </div>
+</div>
 <div class="page">
-@if(Orders != null)
-{
+    <div>
+        @if(FilterPaied == null)
+        {
+            <a @onclick="()=>Filter(null)" class="link selected">All</a>
+            <span>&nbsp;</span>
+        }
+        else
+        {
+            <a @onclick="()=>Filter(null)" class="link">All</a>
+            <span>&nbsp;</span>
+        }
+        @if(FilterPaied == true)
+        {
+            <a @onclick="()=>Filter(true)" class="link selected">Paid</a>
+            <span>&nbsp;</span>
+        }
+        else
+        {
+            <a @onclick="()=>Filter(true)" class="link">Paid</a>
+            <span>&nbsp;</span>
+        }
+        @if(FilterPaied == false)
+        {
+            <a @onclick="()=>Filter(false)" class="link selected">Unpaid</a>
+        }
+        else
+        {
+            <a @onclick="()=>Filter(false)" class="link">Unpaid</a>
+        }
+    </div>
     <div class="car-record-container visual">
         <div class="title-group">
             <div class="title">Order#</div>
             <div class="title">Clien Email</div>
             <div class="title">Order Date</div>
+            <div class="title">Paied</div>
         </div>
-
-    @foreach(var order in Orders)
-    {
-        <div class="box">
-            <div class="item-group">
-                <div class="title">Order#</div>
-                <div class="item">@order.Id</div>
+        <Virtualize @ref="Container" Context="order"
+            ItemsProvider="@LoadOrders" OverscanCount="10">
+            <div class="box" @onclick="()=>OrderAction.Update(order)">
+                <div class="item-group">
+                    <div class="title">Order#</div>
+                    <div class="item">@order.Id</div>
+                </div>
+                <div class="item-group">
+                    <div class="title">Client Email</div>
+                    <div class="item">@order.Email</div>
+                </div>
+                <div class="item-group">
+                    <div class="title">Order Date</div>
+                    <div class="item">
+                        @order.DateCreated.ToString("MM/dd/yyyy")
+                    </div>
+                </div>
+                <div class="item-group">
+                    <div class="title">Paid</div>
+                    @if(order.Paid)
+                    {
+                        <div class="item">Yes</div>
+                    }
+                    else
+                    {
+                        <div class="item">No</div>
+                    }
+                </div>
             </div>
-            <div class="item-group">
-                <div class="title">Client Email</div>
-                <div class="item">@order.Email</div>
-            </div>
-            <div class="item-group">
-                <div class="title">Order Date</div>
-                <div class="item">@order.DateCreated.ToString("MM/dd/yyyy")</div>
-            </div>
-        </div>
-    }
+        </Virtualize>
     </div>
-}
 </div>
+
+<CarRecordOrderAction Context="item" @ref="OrderAction" OnRefresh="@Refresh">
+    <fieldset>
+        <legend>Order Number</legend>
+        <input type="text" disabled="disabled" value="@item.Id"/>
+    </fieldset>
+    <fieldset>
+        <legend>Client Email</legend>
+        <input type="text" disabled="disabled" value="@item.Email"/>
+    </fieldset>
+    <fieldset>
+        <legend>Date Created</legend>
+        <input type="text" disabled="disabled" value="@item.DateCreated.ToString("MM/dd/yyyy")"/>
+    </fieldset>
+    <fieldset>
+        <legend>Paid</legend>
+    <InputSelect @bind-Value="@item.Paid">
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+    </InputSelect>
+    </fieldset>
+</CarRecordOrderAction>

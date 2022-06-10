@@ -19,7 +19,8 @@ public class SearchResultBase : ComponentBase
         if (string.IsNullOrWhiteSpace(Token)) return;
         var result = await ApiRequest
             .GetAsync<RequestResponse<CarRecordOrderDto>>(
-            ApiRoutes.CarRecordOrders.GetByToken + "?token=" + Token);
+            ApiRoutes.CarRecordOrders.GetByToken + "?token=" + Token,
+            CancellationToken.None);
 
         if (result is null ||
             !result.Success ||

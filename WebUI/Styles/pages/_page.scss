@@ -28,6 +28,14 @@
     top: 0;
     background: white;
     padding: pg(200);
+
+    .search-box{
+        display: grid;
+        justify-content: center;
+        input[type="button"]{
+            box-shadow:  hsla(150, 0%, 35%) 0px 0px 0px 1px;
+        }
+    }
 }
 
 .admin-nav{

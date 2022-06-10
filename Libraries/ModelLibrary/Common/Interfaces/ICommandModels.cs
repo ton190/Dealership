@@ -18,6 +18,17 @@ public interface IRemoveModel<TResponse> : IRequest<RequestResponse<TResponse>>
 }
 
 public interface IGetAllModel<TDto>
-    : IRequest<RequestResponse<List<TDto>>> where TDto : BaseDto
+    : IRequest<RequestResponse<ListQuery<TDto>>> where TDto : BaseDto
 {
+    bool SortDescending { get; }
+    int Index { get; }
+    int PageSize { get; }
 }
+
+public interface IGetByIdModel<TDto>
+    : IRequest<RequestResponse<TDto>> where TDto : BaseDto
+{
+    int Id { get; }
+}
+
+public interface IGetCountModel : IRequest<RequestResponse<int>> { }

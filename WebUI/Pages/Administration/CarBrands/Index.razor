@@ -7,9 +7,6 @@
             @onclick="()=>BrandAction.Create()"/>
     @if(CarBrands != null && CarBrands.Count > 0)
     {
-    <div>
-        Total Records: @CarBrands.Count()<br>
-    </div>
     <ul style="margin:0px; padding-top:0px; padding-left:1em;">
         @foreach(var box in BrandBoxes)
         {

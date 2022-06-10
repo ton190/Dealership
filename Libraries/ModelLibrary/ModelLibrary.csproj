@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityLibrary\EntityLibrary.csproj" />
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

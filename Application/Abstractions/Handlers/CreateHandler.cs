@@ -10,12 +10,12 @@ public abstract class CreateHandler<TModel, TEntity, TDto, TResponse>
 {
     private readonly IAppDbContext _dbContext;
     private readonly IMapper _mapper;
-    private readonly IValidator<TDto> _validator;
+    private readonly IValidator<TDto>? _validator;
 
     public CreateHandler(
         IAppDbContext dbContext,
         IMapper mapper,
-        IValidator<TDto> validator)
+        IValidator<TDto>? validator = null)
     {
         _dbContext = dbContext;
         _mapper = mapper;
@@ -25,9 +25,12 @@ public abstract class CreateHandler<TModel, TEntity, TDto, TResponse>
     public async Task<RequestResponse<TResponse>> Handle(
         TModel model, CancellationToken ct)
     {
-        var validator = await _validator.ValidateAsync(model.Dto);
-        if(!validator.IsValid)
-            return new(false, validator.Errors.ToRequestErrors());
+        if(_validator != null)
+        {
+            var validator = await _validator.ValidateAsync(model.Dto);
+            if(!validator.IsValid)
+                return new(false, validator.Errors.ToRequestErrors());
+        }
 
         var entity = _mapper.Map<TDto, TEntity>(model.Dto);
         await _dbContext.Set<TEntity>().AddAsync(entity);

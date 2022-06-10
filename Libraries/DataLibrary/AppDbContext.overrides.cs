@@ -36,11 +36,7 @@ public partial class AppDbContext
                         trackable.DateModified = DateTime.Now;
                         break;
                     case EntityState.Modified:
-                        trackable.DateCreated = Time.Now;
-                        break;
-                    case EntityState.Deleted:
-                        trackable.DateModified = DateTime.Now;
-                        entry.State = EntityState.Modified;
+                        trackable.DateModified = Time.Now;
                         break;
                 }
             }

@@ -16,11 +16,11 @@ public class SearchBase : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         var request = await ApiRequest
-            .GetAsync<RequestResponse<List<CarBrandDto>>>(
-                ApiRoutes.CarBrands.GetAll);
+            .GetAsync<RequestResponse<ListQuery<CarBrandDto>>>(
+                ApiRoutes.CarBrands.GetAll, CancellationToken.None);
 
         if (request != null && request.Success && request.Response != null)
-            CarBrands = request.Response;
+            CarBrands = request.Response.Items;
 
         EditContext = new(new CarRecordSearchDto());
     }
@@ -32,7 +32,7 @@ public class SearchBase : ComponentBase
         if (model.BusinessName != "" ||
             model.ContactName.FullName != "" ||
             model.Phone.Number != "" ||
-            model.BusinessAddress.Address != "") return true;
+            model.BusinessAddress.FullAddress != "") return true;
         return false;
     }
 
@@ -59,7 +59,7 @@ public class SearchBase : ComponentBase
         if (model.BusinessName == "" &&
             model.ContactName.FullName == "" &&
             model.Phone.Number == "" &&
-            model.BusinessAddress.Address == "") return;
+            model.BusinessAddress.FullAddress == "") return;
 
         var request = await ApiRequest
             .PostAsync<RequestResponse<string>>(

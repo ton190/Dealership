@@ -1,9 +1,10 @@
+using Application.Extensions;
 using EntityLibrary;
 
 namespace Application.Abstractions;
 
 public class GetAllHandler<TModel, TEntity, TDto>
-    : IRequestHandler<TModel, RequestResponse<List<TDto>>>
+    : IRequestHandler<TModel, RequestResponse<ListQuery<TDto>>>
     where TModel : IGetAllModel<TDto>
     where TEntity : BaseEntity
     where TDto : BaseDto
@@ -17,16 +18,21 @@ public class GetAllHandler<TModel, TEntity, TDto>
         _mapper = mapper;
     }
 
-    public async Task<RequestResponse<List<TDto>>> Handle(
+    public async Task<RequestResponse<ListQuery<TDto>>> Handle(
         TModel model, CancellationToken ct)
     {
         var query = _dbContext.Set<TEntity>().AsNoTracking();
-        var request = OnBefore(query)
+        var request = OnBefore(query, model)
             .ProjectTo<TDto>(_mapper.ConfigurationProvider);
+        if(model.SortDescending)
+            request = request.OrderByDescending(x => x.Id);
 
-        return new(true, null, await request.ToListAsync(ct));
+        var items = await request.ToQueryListAsync(
+            model.Index, model.PageSize);
+
+        return new(true, null, items);
     }
 
     protected virtual IQueryable<TEntity> OnBefore(
-        IQueryable<TEntity> request) => request;
+        IQueryable<TEntity> request, TModel model) => request;
 }

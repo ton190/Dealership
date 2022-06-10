@@ -18,6 +18,9 @@
     &.noline{
         text-decoration: none;
     }
+    &.selected{
+        color: clr(primary, link);
+    }
 }
 
 input[type="button"], input[type="submit"]{

@@ -21,18 +21,12 @@ public class UpdateCarBrandHandler
         IMapper mapper,
         IValidator<CarBrandDto> validator)
         : base(dbContext, mapper, validator){}
-
-    protected override IQueryable<CarBrand> OnBefore(
-        IQueryable<CarBrand> request) => request.Include(x => x.CarRecords);
 }
 
 public class RemoveCarBrandHandler
     : RemoveHandler<RemoveCarBrandModel, CarBrand, bool>
 {
     public RemoveCarBrandHandler(IAppDbContext dbContext) : base(dbContext){}
-
-    protected override IQueryable<CarBrand> OnBefore(
-        IQueryable<CarBrand> request) => request.Include(x => x.CarRecords);
 }
 
 public class GetAllCarBrandsHandler

@@ -35,8 +35,11 @@ public class CreateCarRecordOrderHandler
 
         var jw = new JaroWinkler();
         var search = model.Dto;
-        var dbList = model.DbList.Where(
-            x => x.CarBrand == search.CarBrand);
+        var dbList = await _dbContext.CarRecords.AsNoTracking().Where(
+                x => x.CarBrand == search.CarBrand)
+                .ProjectTo<CarRecordDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
         var resultList = new ResultList();
 
         if (!string.IsNullOrWhiteSpace(search.BusinessName))
@@ -55,7 +58,7 @@ public class CreateCarRecordOrderHandler
             resultList.AddRange(dbList.Where(x => x.PhoneNumbers.Any(
                     x => x.Number == search.Phone.Number)));
 
-        if (!string.IsNullOrWhiteSpace(search.BusinessAddress.Address))
+        if (!string.IsNullOrWhiteSpace(search.BusinessAddress.FullAddress))
         {
             var address = search.BusinessAddress;
             resultList.AddRange(dbList

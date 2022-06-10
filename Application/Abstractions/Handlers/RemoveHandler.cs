@@ -2,7 +2,7 @@ using EntityLibrary;
 
 namespace Application.Abstractions;
 
-public class RemoveHandler<TModel, TEntity, TResponse>
+public abstract class RemoveHandler<TModel, TEntity, TResponse>
     : IRequestHandler<TModel, RequestResponse<TResponse>>
     where TModel : IRemoveModel<TResponse>
     where TEntity : BaseEntity

@@ -16,7 +16,7 @@ public class RecordActionBase : CUDAction<CarRecordDto>
     {
         if(UpdateModel is null) return;
 
-        await ApiRequest.DeleteAsync<RequestResponse>(
+        await ApiRequest.DeleteAsync<RequestResponse<bool>>(
             ApiRoutes.CarRecords.Remove + UpdateModel!.Id);
         await Refresh();
     }
@@ -28,8 +28,6 @@ public class RecordActionBase : CUDAction<CarRecordDto>
 
         model.BusinessAddress.PostalCode = model.BusinessAddress.PostalCode
             .ToUpper().Replace("[^A-Z0-9]", "").Replace(" ", "");
-
-        Console.WriteLine(model.CarBrand);
 
         if (!EditContext.Validate()) return;
 

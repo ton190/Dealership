@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.Web.Virtualization;
 using ModelLibrary.CarBrands;
 using ModelLibrary.CarRecords;
 
@@ -8,118 +8,51 @@ public class IndexBase : ComponentBase
 {
     [Inject] ApiRequest ApiRequest { get; set; } = null!;
     protected RecordActionBase RecordAction { get; set; } = null!;
-    protected List<CarRecordDto>? CarRecords { get; set; }
     protected List<CarBrandDto> CarBrands { get; set; } = new();
-    protected string _searchString { get; set; } = string.Empty;
-
-    private int page = 1;
-    protected int Page
-    {
-        get => page <= TotalPages ? page : TotalPages;
-        set => page = value;
-    }
-    protected int PageSize { get; set; } = 10;
-    protected int TotalPages =>
-        (int)Math.Ceiling(Search(CarRecords).Count() / (double)PageSize);
-    protected List<PagBox> PagBoxes { get; set; } = new();
-
-    private void SetBoxHandlers()
-    {
-        PagBoxes = new();
-        for (var i = 1; i < TotalPages+1; i++)
-        {
-            var temp = i;
-            var box = new PagBox();
-            box.Id = i;
-            box.Action = (e) => Page = temp;
-            PagBoxes.Add(box);
-        }
-    }
-
-    protected List<CarRecordDto> CarRecordList
-        => Search(CarRecords).Skip((Page - 1) * PageSize)
-        .Take(PageSize).ToList();
-
-    protected async Task Refresh()
-    {
-        await GetRecords();
-        SetBoxHandlers();
-        StateHasChanged();
-    }
+    protected Virtualize<CarRecordDto> Container { get; set; } = null!;
+    protected string SearchString = string.Empty;
+    private int maxListSize = 0;
 
     protected override async Task OnInitializedAsync()
     {
         await GetBrands();
-        await GetRecords();
-        SetBoxHandlers();
     }
 
-    protected async Task GetRecords()
+    protected async ValueTask<ItemsProviderResult<CarRecordDto>>
+        LoadRecords(ItemsProviderRequest request)
     {
-        var request = await ApiRequest
-            .GetAsync<RequestResponse<List<CarRecordDto>>>(
-                ApiRoutes.CarRecords.GetAll);
+        var query = ApiRoutes.CarRecords.GetAll;
+        query += $"?index={request.StartIndex}";
+        query += $"&size={request.Count}";
+        if (SearchString != "") query += $"&search={SearchString}";
 
-        if (request != null && request.Success && request.Response != null)
-            CarRecords = request.Response;
-    }
+        var list = (await ApiRequest
+                .GetAsync<RequestResponse<ListQuery<CarRecordDto>>>(
+                    query, request.CancellationToken))!.Response;
 
-    protected string GetBrandName(int id)
-    {
-        var result = CarBrands.Where(x => x.Id == id).FirstOrDefault();
-        return result is null ? "" : result.Name;
+        var records = list is null ? new() : list;
+
+        var baseSize = request.StartIndex + request.Count + 10;
+        maxListSize = Math.Max(
+            maxListSize, Math.Min(records.TotalItems, baseSize));
+
+        return new ItemsProviderResult<CarRecordDto>(
+            records.Items, maxListSize);
     }
 
     protected async Task GetBrands()
     {
         var request = await ApiRequest
-            .GetAsync<RequestResponse<List<CarBrandDto>>>(
-                ApiRoutes.CarBrands.GetAll);
+            .GetAsync<RequestResponse<ListQuery<CarBrandDto>>>(
+                ApiRoutes.CarBrands.GetAll, CancellationToken.None);
 
         if (request != null && request.Success && request.Response != null)
-            CarBrands = request.Response;
+            CarBrands = request.Response.Items;
     }
 
-    protected void OnSearch(ChangeEventArgs args)
+    protected async Task Refresh()
     {
-        if (args.Value is null) return;
-
-        _searchString = (string)args.Value;
-        SetBoxHandlers();
-    }
-
-    private List<CarRecordDto> Search(List<CarRecordDto>? records)
-    {
-        if (records is null) return new();
-
-        if (_searchString == "")
-        {
-            return records;
-        }
-        List<CarRecordDto> newRecords = new();
-
-        newRecords.AddRange(records.Where(x => x.BusinessName.Contains(
-            _searchString, StringComparison.OrdinalIgnoreCase) ||
-            x.FINCode.Contains(
-            _searchString, StringComparison.OrdinalIgnoreCase) ||
-            x.BusinessAddress.Address.Contains(
-            _searchString, StringComparison.OrdinalIgnoreCase) ||
-            CarBrands.First(y => y.Name.ToLower() == x.CarBrand.ToLower())
-            .Name.Contains(
-            _searchString, StringComparison.OrdinalIgnoreCase) ||
-            x.ContactNames.Any(x => x.FirstName.Contains(
-            _searchString, StringComparison.OrdinalIgnoreCase) ||
-            x.LastName.Contains(
-            _searchString, StringComparison.OrdinalIgnoreCase)) ||
-            x.PhoneNumbers.Any(x => x.Number.Contains(
-            _searchString, StringComparison.OrdinalIgnoreCase))));
-
-        return newRecords;
-    }
-
-    protected class PagBox
-    {
-        public int Id { get; set; }
-        public Action<MouseEventArgs> Action { get; set; } = e => { };
+        maxListSize = 0;
+        await Container.RefreshDataAsync();
     }
 }

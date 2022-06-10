@@ -9,16 +9,24 @@ public class CarRecordOrdersController : BasicControllerBase
 {
     [HttpPost(ApiRoutes.CarRecordOrders.Create)]
     public async Task<IActionResult> Create([FromBody] CarRecordSearchDto dto)
-    {
-        var request = await BasicGetAction<GetAllCarRecordsModel,
-            List<CarRecordDto>>(new(), MemoryCacheNames.CarRecords);
+        => await BasicAction<CreateCarRecordOrderModel, string>(new(dto));
 
-        var dbList = await GetCarRecords();
-        if (dbList is null) return BadRequest();
+    [HttpPut(ApiRoutes.CarRecordOrders.Update)]
+    public async Task<IActionResult> Update([FromBody] CarRecordOrderDto dto)
+        => await BasicAction<UpdateCarRecordOrderModel, bool>(new(dto));
 
-        return await BasicAction<CreateCarRecordOrderModel, string>(
-            new(dto, dbList));
-    }
+    [HttpDelete(ApiRoutes.CarRecordOrders.Remove + "{id:int}")]
+    public async Task<IActionResult> Remove(int id)
+        => await BasicAction<RemoveCarRecordOrderModel, bool>(new(id));
+
+    [HttpGet(ApiRoutes.CarRecordOrders.GetAll)]
+    public async Task<IActionResult> GetAll(
+        [FromQuery] int index = 1,
+        [FromQuery] int size = 0,
+        [FromQuery] string? search = null,
+        [FromQuery] bool? paid = null)
+        => await BasicAction<GetAllCarRecordOrdersModel,
+        ListQuery<CarRecordOrderDto>>(new(true, index, size, search, paid));
 
     [HttpGet(ApiRoutes.CarRecordOrders.GetByToken)]
     public async Task<IActionResult> GetCarRecordOrderByToken(
@@ -26,19 +34,8 @@ public class CarRecordOrdersController : BasicControllerBase
         => await BasicAction<GetCarRecordOrderByTokenModel,
             CarRecordOrderDto>(new(token));
 
-    [HttpGet(ApiRoutes.CarRecordOrders.GetAll)]
-    public async Task<IActionResult> GetAllCarRecordOrders()
-        => await BasicAction<
-            GetAllCarRecordOrdersModel, List<CarRecordOrderDto>>(new());
-
-    //Get Car Records
-    private async Task<List<CarRecordDto>?> GetCarRecords()
-    {
-        var request = await BasicGetAction<GetAllCarRecordsModel,
-            List<CarRecordDto>>(new(), MemoryCacheNames.CarRecords);
-
-        if (request is null) return null;
-        var response = (RequestResponse<List<CarRecordDto>>)request;
-        return response.Response;
-    }
+    [HttpGet(ApiRoutes.CarRecordOrders.GetStatistics)]
+    public async Task<IActionResult> GetCarRecordOrdersStatistic()
+        => await BasicAction<GetCarRecordOrdersStatisticsModel,
+            CarRecordOrdersStatisticsDto>(new());
 }

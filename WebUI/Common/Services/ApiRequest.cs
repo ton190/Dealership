@@ -19,8 +19,9 @@ public class ApiRequest
         => await ReadDataAsync<TResponse>(
                 await _httpClient.DeleteAsync(route));
 
-    public async Task<TResponse?> GetAsync<TResponse>(string route)
-        => await _httpClient.GetFromJsonAsync<TResponse>(route);
+    public async Task<TResponse?> GetAsync<TResponse>(
+        string route, CancellationToken ct)
+        => await _httpClient.GetFromJsonAsync<TResponse>(route, ct);
 
     private async Task<TResponse?> ReadDataAsync<TResponse>(
         HttpResponseMessage message)

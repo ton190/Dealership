@@ -1,6 +1,7 @@
 @use '../basic' as *;
 
 .car-record-container {
+        margin-top: calc(var(--pg-400) * -1);
     display: grid;
     font-size: fs(100);
     gap: pg(400);
@@ -52,6 +53,7 @@
         font-size: fs(200);
     }
     @include mq(lg){
+        margin-top: 0;
         border: 1px solid black;
         border-bottom: none;
         border-left: none;

@@ -9,6 +9,9 @@ public record UpdateCarBrandModel(CarBrandDto Dto)
 public record RemoveCarBrandModel(int Id)
     : IRemoveModel<bool>;
 
-public record GetAllCarBrandsModel()
+public record GetAllCarBrandsModel(
+    bool SortDescending = false, int Index = 0, int PageSize = 0)
     : IGetAllModel<CarBrandDto>;
 
+public record GetCarRecordsStatistics()
+    : IRequest<RequestResponse<CarRecordsStatisticsDto>>;

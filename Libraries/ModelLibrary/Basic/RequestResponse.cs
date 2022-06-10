@@ -17,7 +17,6 @@ public class ValidationErrors : List<string>
         => this.AddRange(errors);
 }
 
-
 public static partial class Extensions
 {
     public static ValidationErrors ToRequestErrors(

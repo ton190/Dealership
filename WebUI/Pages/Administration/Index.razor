@@ -1,8 +1,37 @@
 @attribute [Route(UIRoutes.Administration.Index)]
+@inherits IndexBase
 @layout AdminLayout
 
 <PageTitle>Administration</PageTitle>
 
 <div class="page">
-    <h1>Administration Page</h1>
+
+@if(OrdersStatistics != null && RecordsStatistics != null)
+{
+    <div>
+        <div>Site Visits</div>
+        <ul>
+            <li>Today: 0</li>
+            <li>This Week: 0</li>
+            <li>This Month: 0</li>
+            <li>Total: 0</li>
+        </ul>
+
+        <div>Orders</div>
+        <ul>
+            <li>Today: @OrdersStatistics.TodayOrdersPaid</li>
+            <li>This Week: @OrdersStatistics.WeekOrdersPaid</li>
+            <li>This Month: @OrdersStatistics.MonthOrdersPaid</li>
+            <li>Total: @OrdersStatistics.TotalOrdersPaid</li>
+        </ul>
+
+        <div>Records</div>
+        <ul>
+            <li>Today: @RecordsStatistics.TodayNewRecords</li>
+            <li>This Week: @RecordsStatistics.WeekNewRecords</li>
+            <li>This Month: @RecordsStatistics.MonthNewRecords</li>
+            <li>Total: @RecordsStatistics.TotalNewRecords</li>
+        </ul>
+    </div>
+}
 </div>

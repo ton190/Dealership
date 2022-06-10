@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using ModelLibrary.CarBrands;
-using WebUI.Pages.Administration.CarBrands;
 
-namespace WebUI.Pages.Administration;
+namespace WebUI.Pages.Administration.CarBrands;
 
 public class IndexBase : ComponentBase
 {
@@ -15,9 +14,10 @@ public class IndexBase : ComponentBase
 
     protected async Task LoadData()
     {
-        CarBrands = (await ApiRequest
-            .GetAsync<RequestResponse<List<CarBrandDto>>>(
-                ApiRoutes.CarBrands.GetAll))!.Response;
+        var request = await ApiRequest
+            .GetAsync<RequestResponse<ListQuery<CarBrandDto>>>(
+                ApiRoutes.CarBrands.GetAll, CancellationToken.None);
+        CarBrands = request?.Response is null ? new() : request.Response.Items;
         SetBoxHandlers();
         StateHasChanged();
     }
@@ -25,7 +25,7 @@ public class IndexBase : ComponentBase
     private void SetBoxHandlers()
     {
         BrandBoxes = new();
-        if(CarBrands is null) return;
+        if (CarBrands is null) return;
 
         foreach (var brand in CarBrands)
         {

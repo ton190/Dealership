@@ -15,7 +15,7 @@ public static partial class DependencyInjection
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseInMemoryDatabase("Dealership");
-                options.EnableSensitiveDataLogging();
+                /* options.EnableSensitiveDataLogging(); */
             });
         }
         else

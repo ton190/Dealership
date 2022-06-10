@@ -5,7 +5,7 @@ namespace ModelLibrary.CarRecords;
 
 public class AddressDto
 {
-    public string Address
+    public string FullAddress
     {
         get
         {
@@ -36,7 +36,7 @@ public class AddressDtoValidator : AbstractValidator<AddressDto>
         {
             RuleFor(x => x.Province)
                 .Must((model, province) => (province == ProvinceEnum.None &&
-                        model.Address != "") ? false : true)
+                        model.FullAddress != "") ? false : true)
                 .WithMessage("Province not selected");
             RuleFor(x => x.UnitNumber)
                 .Must((number) =>
@@ -46,7 +46,7 @@ public class AddressDtoValidator : AbstractValidator<AddressDto>
 
         RuleFor(x => x.BuildingNumber)
             .Must((model, number) =>
-                number == "" && model.Address != "" ? false : true)
+                number == "" && model.FullAddress != "" ? false : true)
             .WithMessage("Building Number cannot be empty")
             .Must((number) =>
                 number == "" ? true : RegExp.AddressNumber.IsMatch(number))
@@ -55,12 +55,13 @@ public class AddressDtoValidator : AbstractValidator<AddressDto>
         RuleFor(x => x.StreetName)
             .Cascade(CascadeMode.Stop)
             .Must((model, street) =>
-                street == "" && model.Address != "" ? false : true)
+                street == "" && model.FullAddress != "" ? false : true)
             .WithMessage("Street Name cannot be empty")
             .MaximumLength(50)
             .WithMessage("Street Nane max length must be 50 characters")
             .Must((model, address) =>
-                model.Address == "" ? true : RegExp.StreetName.IsMatch(address))
+                model.FullAddress == "" ? true : RegExp.StreetName
+                .IsMatch(address))
             .WithMessage("Incorrect Street Name format");
 
         if (!searchModel)
@@ -68,7 +69,7 @@ public class AddressDtoValidator : AbstractValidator<AddressDto>
             RuleFor(x => x.City)
                 .Cascade(CascadeMode.Stop)
                 .Must((model, city) =>
-                    city == "" && model.Address != "" ? false : true)
+                    city == "" && model.FullAddress != "" ? false : true)
                 .WithMessage("City Name cannot be empty")
                 .MaximumLength(20)
                 .WithMessage("City Name max length must be 20 characters")
@@ -79,9 +80,10 @@ public class AddressDtoValidator : AbstractValidator<AddressDto>
         RuleFor(x => x.PostalCode)
             .Cascade(CascadeMode.Stop)
             .Must((model, code) => (code == ""
-                && model.Address != "") ? false : true)
+                && model.FullAddress != "") ? false : true)
             .WithMessage("Postal Code cannot be empty")
-            .Must((code) => code == "" ? true : RegExp.PostalCode.IsMatch(code))
+            .Must((code) => code == "" ? true : RegExp.PostalCode
+                .IsMatch(code))
             .WithMessage("Incorrect Postal Code format");
     }
 }

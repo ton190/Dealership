@@ -25,14 +25,18 @@ public static class ApiRoutes
         public const string Update = $"{Base}update/";
         public const string Remove = $"{Base}remove/";
         public const string GetAll = $"{Base}getall/";
+        public const string GetStatistics = $"{Base}getstatistics/";
     }
 
     public static class CarRecordOrders
     {
         private const string Base = $"{Root}carrecordorders/";
         public const string Create = $"{Base}create/";
+        public const string Update = $"{Base}update/";
+        public const string Remove = $"{Base}remove/";
         public const string Search = $"{Base}search/";
-        public const string GetByToken = $"{Base}getbytoken/";
         public const string GetAll = $"{Base}getall/";
+        public const string GetByToken = $"{Base}getbytoken/";
+        public const string GetStatistics = $"{Base}getstatistics/";
     }
 }
