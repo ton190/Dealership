@@ -1,0 +1,23 @@
+@attribute [Route(UIRoutes.Administration.Account.Login)]
+@layout MainLayout
+@inherits LoginBase
+
+<AuthorizeView>
+<NotAuthorized>
+<div class="page">
+@if(EditContext != null)
+{
+<EditForm EditContext="@EditContext" class="form"
+    OnSubmit="OnSubmit" Context="form">
+    <FluentValidationValidator />
+    <InputText type="text" @bind-Value="@Model.Email"
+        placeholder="Email"/>
+    <InputText type="password" @bind-Value="@Model.Password"
+        placeholder="Password"/>
+        <input type="submit" value="Login"/>
+    <ValidationSummary />
+</EditForm>
+}
+</div>
+</NotAuthorized>
+</AuthorizeView>

@@ -12,9 +12,15 @@ public class DbValidatorController : ControllerBase
     public DbValidatorController(IDbValidator dbValidator)
         => _dbValidator = dbValidator;
 
-    [HttpGet(ApiRoutes.DbValidator.IsCarBrandNameExists)]
-    public async Task<bool> IsCarBrandNameExists(
+    [HttpGet(ApiRoutes.DbValidator.IsBrandNameExists)]
+    public async Task<bool> IsBrandNameExists(
         [FromQuery]string name, [FromQuery]int id)
-        => await _dbValidator.IsCarBrandNameExists(
+        => await _dbValidator.IsBrandNameExists(
             name, id, CancellationToken.None);
+
+    [HttpGet(ApiRoutes.DbValidator.IsUserEmailExists)]
+    public async Task<bool> IsUserEmailExists(
+        [FromQuery]string email, [FromQuery]int id)
+        => await _dbValidator.IsUserEmailExists(
+            email, id, CancellationToken.None);
 }

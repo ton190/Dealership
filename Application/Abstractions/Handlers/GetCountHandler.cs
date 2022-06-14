@@ -1,5 +1,3 @@
-using EntityLibrary;
-
 namespace Application.Abstractions;
 
 public class GetCountHandler<TModel, TEntity>

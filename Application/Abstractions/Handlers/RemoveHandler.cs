@@ -15,7 +15,8 @@ public abstract class RemoveHandler<TModel, TEntity, TResponse>
         TModel model, CancellationToken ct)
     {
         var query = OnBefore(_dbContext.Set<TEntity>().AsQueryable());
-        var entity = await query.FirstOrDefaultAsync(x => x.Id == model.Id);
+        var entity = await query.FirstOrDefaultAsync(
+            x => x.Id == model.Id, ct);
         if (entity is null) return new(false, new("Database error"));
 
         _dbContext.Set<TEntity>().Remove(entity);

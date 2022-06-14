@@ -147,6 +147,7 @@ body {
   top: 0;
   background: white;
   padding: var(--pg-200);
+  padding-bottom: 0;
 }
 .page-group .search-box {
   display: grid;
@@ -195,6 +196,13 @@ body {
   display: grid;
   gap: 0.5rem;
 }
+.form .message {
+  color: white;
+  padding: var(--pg-200);
+}
+.form .message.ok {
+  background: #777;
+}
 
 input, select {
   font-family: inherit;
@@ -202,14 +210,14 @@ input, select {
   padding: var(--pg-50);
 }
 
-input[type=text], input[type=number], select {
+input[type=text], input[type=number], input[type=password], select {
   background: white;
   outline: none !important;
   border: none;
   transition: box-shadow 0.2s linear;
   box-shadow: black 0px 0px 5px;
 }
-input[type=text]:focus, input[type=number]:focus, select:focus {
+input[type=text]:focus, input[type=number]:focus, input[type=password]:focus, select:focus {
   box-shadow: black 0px 0px 5px 2px;
 }
 
@@ -258,7 +266,7 @@ input[type=button]:hover, input[type=submit]:hover {
 
 .popup {
   position: fixed;
-  overflow-y: scroll;
+  overflow-y: auto;
   inset: 0;
   display: none;
   background: hsl(150deg, 0%, 90%);
@@ -270,6 +278,8 @@ input[type=button]:hover, input[type=submit]:hover {
   padding: var(--pg-200);
   display: grid;
   align-items: start;
+  align-content: start;
+  gap: var(--pg-200);
 }
 
 .car-record-container {
@@ -317,6 +327,7 @@ input[type=button]:hover, input[type=submit]:hover {
   white-space: nowrap;
 }
 .car-record-container .item {
+  display: grid;
   padding: var(--pg-50);
 }
 @media only screen and (min-width: 450px) {

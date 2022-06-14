@@ -1,0 +1,75 @@
+@attribute [Route(UIRoutes.Orders.Search)]
+@using ModelLibrary.Orders
+@using ModelLibrary.Brands;
+@using Domain.Enums
+@inherits SearchBase
+@layout MainLayout
+
+<div class="page carrecordsearch">
+@if(EditContext is not null && Brands is not null)
+{
+var model = (RecordSearchDto)EditContext.Model;
+    <p>
+        Number of fields will not affect the search result.<br>
+        For example: if you fill "Company Name" and "Phone Number",
+        but only "Phone Number" matches the search result, you still
+        get the search result that was found with "Phone Number".<br>
+        We encourage you to fill out as much fields as you can for better
+        search result.
+    </p>
+    <EditForm
+        EditContext="@EditContext" class="form" OnSubmit="@OnSubmit">
+        <FluentValidationValidator />
+        <fieldset>
+            <legend>Client Information</legend>
+            <InputText type="text"
+                @bind-Value="model.ClientEmail" placeholder="Your Email"/>
+        </fieldset>
+        <fieldset>
+            <legend>Car Brand</legend>
+            <InputSelect @bind-Value="@model.Brand">
+            <option value="">Select...</option>
+            @foreach(var brand in Brands)
+            {
+                <option value="@brand.Name">@brand.Name</option>
+            }
+            </InputSelect>
+        </fieldset>
+        <fieldset>
+            <legend>Business Informatio</legend>
+            <InputText type="text"
+                @bind-Value="@model.BusinessName" placeholder="Business Name"/>
+        </fieldset>
+        <fieldset>
+            <legend>Contact Information</legend>
+            <InputText
+                @bind-Value="@model.ContactName.FirstName"
+                type="text" placeholder="First Name"/>
+            <InputText
+                @bind-Value="@model.ContactName.LastName"
+                type="text" placeholder="Last Name"/>
+            <InputText
+                @bind-Value="@model.Phone.Number"
+                type="text" placeholder="Phone Number"/>
+        </fieldset>
+        <fieldset>
+            <legend>Address</legend>
+            <InputText
+                @bind-Value="@model.BusinessAddress.UnitNumber"
+                type="text" placeholder="Unit Number"/>
+            <InputText
+                @bind-Value="@model.BusinessAddress.BuildingNumber"
+                type="text" placeholder="Building Number"/>
+            <InputText
+                @bind-Value="@model.BusinessAddress.StreetName"
+                type="text" placeholder="Street Name"/>
+            <InputText
+                @bind-Value="@model.BusinessAddress.PostalCode"
+                type="text" placeholder="Postal Code"/>
+        </fieldset>
+            <input type="submit" value="Search Record"/>
+        <ValidationSummary />
+    </EditForm>
+}
+
+</div>

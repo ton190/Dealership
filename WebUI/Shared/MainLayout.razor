@@ -4,8 +4,14 @@
 <main>
     <div class="admin-nav">
         <NavLink href="" Match=NavLinkMatch.All>Home</NavLink>&nbsp;
-        <NavLink href="@UIRoutes.Administration.Index">Administration</NavLink>&nbsp;
-        <NavLink href="@UIRoutes.CarRecordOrders.Search">Search</NavLink>
+        <AuthorizeView>
+        <Authorized>
+        <NavLink href="@UIRoutes.Administration.Index">
+            Administration
+        </NavLink>&nbsp;
+        </Authorized>
+        </AuthorizeView>
+        <NavLink href="@UIRoutes.Orders.Search">Search</NavLink>
     </div>
     <hr>
     @Body

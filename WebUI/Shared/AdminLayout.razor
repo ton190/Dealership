@@ -1,26 +1,29 @@
-@inherits LayoutComponentBase
-@implements IDisposable
-@inject AppSettings AppSettings
+@inherits AdminLayoutBase
+<AuthorizeView>
+<Authorized>
 <main>
     <div class="admin-nav">
         <NavLink href="" Match=NavLinkMatch.All>Home</NavLink>&nbsp;
-        <NavLink Match=NavLinkMatch.All href="@UIRoutes.Administration.Index">Administration</NavLink>&nbsp;
-        <NavLink href="@UIRoutes.Administration.CarBrands.Index">Brands</NavLink>&nbsp;
-        <NavLink href="@UIRoutes.Administration.CarRecords.Index">Records</NavLink>&nbsp;
-        <NavLink href="@UIRoutes.Administration.CarRecordOrders.Index">Orders</NavLink>
+        <NavLink Match=NavLinkMatch.All
+            href="@UIRoutes.Administration.Index">
+            Administration
+        </NavLink>&nbsp;
+        <NavLink href="@UIRoutes.Administration.Brands.Index">
+            Brands
+        </NavLink>&nbsp;
+        <NavLink href="@UIRoutes.Administration.Records.Index">
+            Records
+        </NavLink>&nbsp;
+        <NavLink href="@UIRoutes.Administration.Orders.Index">
+            Orders
+        </NavLink>&nbsp;
+        <NavLink href="@UIRoutes.Administration.Account.UpdateAdminProfile">
+            Update Profile
+        </NavLink>&nbsp;
+        <a class="link" @onclick="LogOut">Logout</a>
     </div>
     <hr>
     @Body
 </main>
-
-@code{
-    protected override void OnInitialized()
-    {
-        AppSettings.OnChange += StateHasChanged;
-    }
-
-    public void Dispose()
-    {
-        AppSettings.OnChange -= StateHasChanged;
-    }
-}
+</Authorized>
+</AuthorizeView>

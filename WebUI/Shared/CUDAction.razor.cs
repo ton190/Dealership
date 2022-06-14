@@ -1,24 +1,30 @@
+using Microsoft.JSInterop;
+
 namespace WebUI.Shared;
 
 public abstract partial class CUDAction<TDto> : ComponentBase
     where TDto : BaseDto, new()
 {
+    [Inject] IJSRuntime JS { get; set; } = null!;
     [Parameter] public RenderFragment<TDto>? ChildContent { get; set; }
     [Parameter] public EventCallback OnRefresh { get; set; }
     protected abstract string EntityName { get; }
     protected ValidationMessageStore? _messagesStore { get; set; }
     protected EditContext? EditContext { get; set; }
     protected TDto? UpdateModel { get; set; }
+    protected bool flag;
+    protected bool scrollAction = true;
 
-    public void Create() => SetEditContext(new TDto());
-    public void Update(TDto dto)
+    public async Task Create() => await SetEditContext(new TDto());
+    public async Task Update(TDto dto)
     {
         UpdateModel = dto;
-        SetEditContext((TDto)dto.Clone());
+        await SetEditContext((TDto)dto.Clone());
     }
 
-    private void SetEditContext(TDto dto)
+    private async Task SetEditContext(TDto dto)
     {
+        if(scrollAction) await JS.InvokeVoidAsync("disableScroll");
         EditContext = new(dto);
         _messagesStore = new(EditContext);
         EditContext.OnValidationRequested += (s, e) => _messagesStore.Clear();
@@ -26,15 +32,16 @@ public abstract partial class CUDAction<TDto> : ComponentBase
             => _messagesStore.Clear(e.FieldIdentifier);
     }
 
-    protected void Clear()
+    protected async Task Clear()
     {
+        if(scrollAction) await JS.InvokeVoidAsync("enableScroll");
         EditContext = null;
         UpdateModel = null;
     }
 
     protected async Task Refresh()
     {
-        Clear();
+        await Clear();
         await OnRefresh.InvokeAsync();
     }
     protected abstract Task OnSubmit();

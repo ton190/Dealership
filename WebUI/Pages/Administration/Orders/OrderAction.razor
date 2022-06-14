@@ -1,0 +1,15 @@
+@inherits OrderActionBase
+
+@if(@Model != null)
+{
+<Popup Open=true>
+    <b>Order Informatiom</b>
+    Order Number: @Model.Id<br>
+    Client Email: @Model.Email<br>
+    Status: @Model.Status<br>
+    Order Date: @Model.DateCreated.ToString("MM/dd/yyyy")
+    <input type="button" value="Send Invoce"/>
+    <input type="button" value="Refound"/>
+    <input type="button" value="Cancel" @onclick="Cancel"/>
+</Popup>
+}

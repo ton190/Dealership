@@ -1,0 +1,31 @@
+@attribute [Route(UIRoutes.Administration.Account.UpdateAdminProfile)]
+@layout AdminLayout
+@inherits UpdateAdminProfileBase
+
+<div class="page">
+@if(Model != null)
+{
+    <EditForm EditContext="@EditContext" OnValidSubmit="OnValidSubmit"
+        class="form">
+        <FluentValidationValidator />
+        <fieldset>
+            <legend>Email</legend>
+            <InputText type="text" @bind-Value="Model.Email"/>
+        </fieldset>
+        <fieldset>
+            <legend>Password</legend>
+            <InputText type="password" @bind-Value="Model.Password"/>
+        </fieldset>
+        <fieldset>
+            <legend>Confirm Password</legend>
+            <InputText type="password" @bind-Value="Model.ConfirmPassword"/>
+        </fieldset>
+        <input type="submit" value="Update"/>
+        <ValidationSummary />
+        @if(status)
+        {
+            <div class="message ok">Profile Updated</div>
+        }
+    </EditForm>
+}
+</div>

@@ -2,7 +2,7 @@
 
 .popup{
     position: fixed;
-    overflow-y: scroll;
+    overflow-y: auto;
     inset: 0;
     display: none;
     background: hsla(150, 0%, 90%);
@@ -15,5 +15,7 @@
         padding: pg(200);
         display: grid;
         align-items: start;
+        align-content: start;
+        gap: pg(200);
     }
 }

@@ -21,7 +21,7 @@ public abstract class GetByIdHandler<TModel, TEntity, TDto>
         TModel model, CancellationToken ct)
     {
         var entity = await _dbContext.Set<TEntity>().AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == model.Id);
+            .FirstOrDefaultAsync(x => x.Id == model.Id, ct);
         if(entity == null) return new(true, new("No Records Found"), null);
 
         var dto = _mapper.Map<TEntity, TDto>(entity);

@@ -1,6 +1,6 @@
 using Domain.Enums;
 using Domain.Services;
-using EntityLibrary.CarRecords;
+using EntityLibrary;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLibrary.Configurations;
@@ -9,7 +9,20 @@ public static class DbExtensions
 {
     public static ModelBuilder SeedDefaultData(this ModelBuilder builder)
     {
-        builder.Entity<CarBrand>().HasData(new[]
+        builder.Entity<User>().HasData(new[]
+        {
+            new
+            {
+                Id = 1,
+                Role = "admin",
+                Email = "admin@gmail.com",
+                Password = "wbX09MDJ2G14WACPkNRj9xF8b0hSEWo0iJVxGm35Aok=",
+                PasswordHash = "UrWyueVddmB7FU4J6Tv76tpqc",
+                DateCreated = Time.Now,
+                DateModified = Time.Now,
+            }
+        });
+        builder.Entity<Brand>().HasData(new[]
         {
             new
             {
@@ -27,7 +40,7 @@ public static class DbExtensions
             }
         });
 
-        builder.Entity<CarRecord>(x =>
+        builder.Entity<Record>(x =>
          {
              for (int i = 1; i < 100; i++)
              {
@@ -38,14 +51,14 @@ public static class DbExtensions
                     Id = i,
                     BusinessName = "Poganka Studio "+ i ,
                     FINCode = "123456",
-                    CarBrand = "Lexus",
+                    Brand = "Lexus",
                     DateCreated = Time.Now,
                     DateModified = Time.Now
                 }
              });
                  x.OwnsOne(x => x.BusinessAddress).HasData(new
                  {
-                     CarRecordId = i,
+                     RecordId = i,
                      Province = ProvinceEnum.ON,
                      City = "Toronto",
                      PostalCode = "M2J4Y2",
@@ -58,7 +71,7 @@ public static class DbExtensions
                     new
                     {
                         Id = i,
-                        CarRecordId = i,
+                        RecordId = i,
                         FirstName = "Anton",
                         LastName = "Arlazarov",
                         DateCreated = Time.Now,
@@ -67,7 +80,7 @@ public static class DbExtensions
                     new
                     {
                         Id = i+1,
-                        CarRecordId = i,
+                        RecordId = i,
                         FirstName = "Alina",
                         LastName = "Sagaliyeva",
                         DateCreated = Time.Now,
@@ -79,7 +92,7 @@ public static class DbExtensions
                     new
                     {
                         Id = i,
-                        CarRecordId = i,
+                        RecordId = i,
                         Number = "4054318541",
                         DateCreated = Time.Now,
                         DateModified = Time.Now
@@ -87,25 +100,6 @@ public static class DbExtensions
                  });
              };
          });
-
-        builder.Entity<CarRecordOrder>(x =>
-        {
-            for (int i = 1; i < 100; i++)
-            {
-                x.HasData(new[]
-                {
-                    new{
-                        Id = i,
-                        Email = $"test_email{i}@test.com",
-                        Paid = false,
-                        SearchResult = "",
-                        RecordSearch = "",
-                        DateCreated = Time.Now,
-                        DateModified = Time.Now
-                        }
-                });
-            };
-        });
 
         return builder;
     }

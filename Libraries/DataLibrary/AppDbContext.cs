@@ -1,5 +1,5 @@
 using Application.Interfaces;
-using EntityLibrary.CarRecords;
+using EntityLibrary;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLibrary;
@@ -11,9 +11,10 @@ public partial class AppDbContext : DbContext, IAppDbContext
         Database.EnsureCreated();
     }
 
-    public DbSet<CarBrand> CarBrands => Set<CarBrand>();
-    public DbSet<CarRecord> CarRecords => Set<CarRecord>();
-    public DbSet<CarRecordOrder> CarRecordOrders => Set<CarRecordOrder>();
+    public DbSet<Brand> Brands => Set<Brand>();
+    public DbSet<Record> Records => Set<Record>();
+    public DbSet<Order> Orders => Set<Order>();
     public DbSet<Phone> Phones => Set<Phone>();
     public DbSet<ContactName> ContactNames => Set<ContactName>();
+    public DbSet<User> Users => Set<User>();
 }

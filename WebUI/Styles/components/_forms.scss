@@ -23,6 +23,14 @@
         display: grid;
         gap: .5rem;
     }
+    .message{
+        color: white;
+        padding: pg(200);
+
+        &.ok{
+            background: #777;
+        }
+    }
 }
 
 input, select{
@@ -32,7 +40,7 @@ input, select{
 }
 
 
-input[type="text"], input[type="number"], select{
+input[type="text"], input[type="number"], input[type="password"], select{
     background: white;
     outline: none !important;
     border: none;

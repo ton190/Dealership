@@ -1,5 +1,3 @@
-using EntityLibrary.CarRecords;
-
 namespace Application.Interfaces;
 
 public interface IAppDbContext
@@ -7,7 +5,8 @@ public interface IAppDbContext
     Task<int> SaveChangesAsync(CancellationToken ct);
     DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
-    DbSet<CarBrand> CarBrands { get; }
-    DbSet<CarRecord> CarRecords { get; }
-    DbSet<CarRecordOrder> CarRecordOrders { get; }
+    DbSet<Brand> Brands { get; }
+    DbSet<Record> Records { get; }
+    DbSet<Order> Orders { get; }
+    DbSet<User> Users { get; }
 }

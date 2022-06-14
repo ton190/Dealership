@@ -22,13 +22,13 @@ public class GetAllHandler<TModel, TEntity, TDto>
         TModel model, CancellationToken ct)
     {
         var query = _dbContext.Set<TEntity>().AsNoTracking();
-        var request = OnBefore(query, model)
+        var request = OnBefore(query, model).OrderBy(x => x.Id)
             .ProjectTo<TDto>(_mapper.ConfigurationProvider);
         if(model.SortDescending)
             request = request.OrderByDescending(x => x.Id);
 
         var items = await request.ToQueryListAsync(
-            model.Index, model.PageSize);
+            model.Index, model.PageSize, ct);
 
         return new(true, null, items);
     }

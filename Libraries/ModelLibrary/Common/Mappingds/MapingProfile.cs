@@ -2,8 +2,7 @@ using System.Reflection;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using EntityLibrary;
-using EntityLibrary.CarRecords;
-using ModelLibrary.CarRecords;
+using ModelLibrary.Records;
 
 namespace ModelLibrary.Mappingds
 {

@@ -2,32 +2,39 @@ namespace Shared;
 
 public static class UIRoutes
 {
+    public const string Error = "/error";
     public static class Administration
     {
-        private const string Root = $"/administration/";
+        public const string Root = $"/admin/";
         public const string Index = $"{Root}";
 
-        public static class CarBrands
+        public static class Brands
         {
-            private const string Base = $"{Root}carbrands/";
+            public const string Base = $"{Root}brands/";
             public const string Index = $"{Base}";
         }
-        public static class CarRecords
+        public static class Records
         {
-            private const string Base = $"{Root}carrecords/";
+            public const string Base = $"{Root}records/";
             public const string Index = $"{Base}";
         }
-        public static class CarRecordOrders
+        public static class Orders
         {
-            private const string Base = $"{Root}carrecordorders/";
+            public const string Base = $"{Root}orders/";
             public const string Index = $"{Base}";
+        }
+        public static class Account
+        {
+            public const string Base = $"{Root}account/";
+            public const string Login = $"{Base}login";
+            public const string UpdateAdminProfile
+                = $"{Base}updateadminprofile";
         }
     }
-    public static class CarRecordOrders
+    public static class Orders
     {
-        private const string Root = "/carrecordorders/";
+        public const string Root = "/orders/";
         public const string Search = $"{Root}search/";
-        public const string Payment = $"{Root}payment/";
         public const string SearchResult = $"{Root}searchresult/";
     }
 }

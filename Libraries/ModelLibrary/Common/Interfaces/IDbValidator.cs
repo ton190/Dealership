@@ -2,5 +2,6 @@ namespace ModelLibrary.Interfaces;
 
 public interface IDbValidator
 {
-    Task<bool> IsCarBrandNameExists(string name, int id, CancellationToken ct);
+    Task<bool> IsBrandNameExists(string name, int id, CancellationToken ct);
+    Task<bool> IsUserEmailExists(string email, int id, CancellationToken ct);
 }

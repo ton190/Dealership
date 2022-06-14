@@ -1,0 +1,113 @@
+@inherits RecordActionBase
+@using ModelLibrary.Records
+@using ModelLibrary.Brands;
+@using Domain.Enums
+
+@if(EditContext is not null && Brands is not null)
+{
+    var model = (RecordDto)EditContext.Model;
+    <Popup Open=true>
+    <EditForm
+        EditContext="@EditContext" class="form" OnSubmit="@OnSubmit">
+        <FluentValidationValidator />
+        <fieldset>
+            <legend>Business Informatio</legend>
+            <InputText type="text"
+                @bind-Value="@model.BusinessName" placeholder="Business Name"/>
+            <InputText type="text"
+                @bind-Value="@model.FINCode" placeholder="FIN Code"/>
+        </fieldset>
+        <fieldset>
+            <legend>Record Information</legend>
+            <div class="form-group column">
+                <label>Brand</label>
+                <InputSelect @bind-Value="@model.Brand">
+                    <option value="">Select...</option>
+                    @foreach(var brand in Brands)
+                    {
+                        <option value="@brand.Name">@brand.Name</option>
+                    }
+                </InputSelect>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Contact Names</legend>
+            @foreach(var contact in model.ContactNames)
+            {
+                <div class="link"
+                    @onclick="()=>ContactNameAction.Update(contact)">
+                    @contact.FirstName @contact.LastName</div>
+            }
+            <input @onclick="ContactNameAction.Create" type="button"
+                value="Add Contact Name"/>
+        </fieldset>
+        <fieldset>
+            <legend>Phone Numbers</legend>
+            @foreach(var phone in model.PhoneNumbers)
+            {
+                <div class="link" @onclick="()=>PhoneAction.Update(phone)">
+                    @phone.Number
+                </div>
+            }
+            <input @onclick="()=>PhoneAction.Create()" type="button"
+                value="Add Phone Number"/>
+        </fieldset>
+        <fieldset>
+            <legend>Address</legend>
+            <div class="form-group column">
+                <label>Province</label>
+                <InputSelect @bind-Value="@model.BusinessAddress.Province">
+                    @foreach(var province in ProvinceEnum.GetValues(
+                        typeof(ProvinceEnum)))
+                    {
+                        if(province.ToString() == "None")
+                        {
+                            <option value="@province"></option>
+                            continue;
+                        }
+                        <option value="@province">@province</option>
+                    }
+                </InputSelect>
+            </div>
+            <InputText
+                @bind-Value="@model.BusinessAddress.UnitNumber"
+                type="text" placeholder="Unit Number"/>
+            <InputText
+                @bind-Value="@model.BusinessAddress.BuildingNumber"
+                type="text" placeholder="Building Number"/>
+            <InputText
+                @bind-Value="@model.BusinessAddress.StreetName"
+                type="text" placeholder="Street Name"/>
+            <InputText type="text" @bind-Value="@model.BusinessAddress.City"
+                placeholder="City"/>
+            <InputText
+                @bind-Value="@model.BusinessAddress.PostalCode"
+                type="text" placeholder="Postal Code"/>
+        </fieldset>
+            @if(UpdateModel is null)
+            {
+            <input type="submit" value="Add Record"/>
+            }
+            else
+            {
+            <input type="submit" value="Update Record"/>
+            <input type="submit" value="Delete Record" @onclick="@OnRemove"/>
+            }
+            <input @onclick="Clear" type="button" value="Cancel"/>
+        <ValidationSummary />
+    </EditForm>
+    </Popup>
+
+    <PhoneAction DtoList="@model.PhoneNumbers" OnRefresh="()=>StateHasChanged()"
+        @ref="@PhoneAction" Context="item">
+        <InputText type="text" @bind-Value="item.Number" placeholder="Phone"/>
+    </PhoneAction>
+    <ContactNameAction DtoList="@model.ContactNames"
+        OnRefresh="()=>StateHasChanged()" @ref="@ContactNameAction"
+        Context="item">
+        <InputText type="text"
+            @bind-Value="@item.FirstName" placeholder="First Name"/>
+        <InputText type="text"
+            @bind-Value="@item.LastName" placeholder="Last Name"/>
+    </ContactNameAction>
+}

@@ -9,9 +9,15 @@ public class DbValidator : IDbValidator
 
     public DbValidator(HttpClient client) => _client = client;
 
-    public async Task<bool> IsCarBrandNameExists(
+    public async Task<bool> IsBrandNameExists(
         string name, int id, CancellationToken ct)
         => await _client.GetFromJsonAsync<bool>(
-            ApiRoutes.DbValidator.IsCarBrandNameExists +
+            ApiRoutes.DbValidator.IsBrandNameExists +
                 $"?name={name}&id={id}");
+
+    public async Task<bool> IsUserEmailExists(
+        string email, int id, CancellationToken ct)
+        => await _client.GetFromJsonAsync<bool>(
+            ApiRoutes.DbValidator.IsUserEmailExists +
+                $"?email={email}&id={id}");
 }

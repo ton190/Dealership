@@ -8,3 +8,4 @@ global using AutoMapper.QueryableExtensions;
 global using FluentValidation;
 global using Microsoft.EntityFrameworkCore;
 global using Domain.Services;
+global using EntityLibrary;

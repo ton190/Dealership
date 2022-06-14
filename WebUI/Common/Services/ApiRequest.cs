@@ -8,20 +8,26 @@ public class ApiRequest
     public ApiRequest(HttpClient httpClient) => _httpClient = httpClient;
 
     public async Task<TResponse?> PostAsync<TResponse>(
-        string route, object model) => await ReadDataAsync<TResponse>(
+        string route, object model,
+        CancellationToken ct = default(CancellationToken))
+        => await ReadDataAsync<TResponse>(
             await _httpClient.PostAsJsonAsync(route, model));
 
     public async Task<TResponse?> PutAsync<TResponse>(
-            string route, object model) => await ReadDataAsync<TResponse>(
+            string route, object model,
+            CancellationToken ct = default(CancellationToken))
+        => await ReadDataAsync<TResponse>(
                 await _httpClient.PutAsJsonAsync(route, model));
 
-    public async Task<TResponse?> DeleteAsync<TResponse>(string route)
+    public async Task<TResponse?> DeleteAsync<TResponse>(
+        string route, CancellationToken ct =default(CancellationToken))
         => await ReadDataAsync<TResponse>(
                 await _httpClient.DeleteAsync(route));
 
     public async Task<TResponse?> GetAsync<TResponse>(
-        string route, CancellationToken ct)
-        => await _httpClient.GetFromJsonAsync<TResponse>(route, ct);
+        string route, CancellationToken ct = default(CancellationToken))
+        => await ReadDataAsync<TResponse>(
+                await _httpClient.GetAsync(route, ct));
 
     private async Task<TResponse?> ReadDataAsync<TResponse>(
         HttpResponseMessage message)
