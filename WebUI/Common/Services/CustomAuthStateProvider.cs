@@ -17,7 +17,7 @@ public class AppStateProvider : AuthenticationStateProvider
     {
         var request = await _apiRequest
             .GetAsync<RequestResponse<UserProfile>?>(
-                ApiRoutes.Account.GetIdentity, CancellationToken.None);
+                ApiRoutes.Account.GetIdentity);
 
         if (request is null || request.Response == null) return _annoymous;
 

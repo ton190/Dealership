@@ -8,7 +8,7 @@
   --clr-primary-link: hsl(200deg, 50%, 50%);
   --scale-fs: 1.333;
   --fs-50: calc(var(--fs-100) / 2);
-  --fs-100: calc(1rem / var(--scale-fs));
+  --fs-100: calc(0.9rem / var(--scale-fs));
   --fs-200: calc(var(--fs-100) * var(--scale-fs));
   --fs-300: calc(var(--fs-200) * var(--scale-fs));
   --fs-400: calc(var(--fs-300) * var(--scale-fs));
@@ -19,7 +19,7 @@
   --fs-900: calc(var(--fs-800) * var(--scale-fs));
   --scale-pg: 1.333;
   --pg-50: calc(var(--pg-100) / 2);
-  --pg-100: calc(1rem / var(--scale-pg));
+  --pg-100: calc(0.9rem / var(--scale-pg));
   --pg-200: calc(var(--pg-100) * var(--scale-pg));
   --pg-300: calc(var(--pg-200) * var(--scale-pg));
   --pg-400: calc(var(--pg-300) * var(--scale-pg));
@@ -29,37 +29,11 @@
   --pg-800: calc(var(--pg-700) * var(--scale-pg));
   --pg-900: calc(var(--pg-800) * var(--scale-pg));
 }
-@media only screen and (min-width: 450px) {
-  * {
-    --scale-fs: 1.333;
-    --fs-50: calc(var(--fs-100) / 2);
-    --fs-100: calc(1rem / var(--scale-fs));
-    --fs-200: calc(var(--fs-100) * var(--scale-fs));
-    --fs-300: calc(var(--fs-200) * var(--scale-fs));
-    --fs-400: calc(var(--fs-300) * var(--scale-fs));
-    --fs-500: calc(var(--fs-400) * var(--scale-fs));
-    --fs-600: calc(var(--fs-500) * var(--scale-fs));
-    --fs-700: calc(var(--fs-600) * var(--scale-fs));
-    --fs-800: calc(var(--fs-700) * var(--scale-fs));
-    --fs-900: calc(var(--fs-800) * var(--scale-fs));
-    --scale-pg: 1.333;
-    --pg-50: calc(var(--pg-100) / 2);
-    --pg-100: calc(1rem / var(--scale-pg));
-    --pg-200: calc(var(--pg-100) * var(--scale-pg));
-    --pg-300: calc(var(--pg-200) * var(--scale-pg));
-    --pg-400: calc(var(--pg-300) * var(--scale-pg));
-    --pg-500: calc(var(--pg-400) * var(--scale-pg));
-    --pg-600: calc(var(--pg-500) * var(--scale-pg));
-    --pg-700: calc(var(--pg-600) * var(--scale-pg));
-    --pg-800: calc(var(--pg-700) * var(--scale-pg));
-    --pg-900: calc(var(--pg-800) * var(--scale-pg));
-  }
-}
 @media only screen and (min-width: 800px) {
   * {
     --scale-fs: 1.333;
     --fs-50: calc(var(--fs-100) / 2);
-    --fs-100: calc(1rem / var(--scale-fs));
+    --fs-100: calc(0.945rem / var(--scale-fs));
     --fs-200: calc(var(--fs-100) * var(--scale-fs));
     --fs-300: calc(var(--fs-200) * var(--scale-fs));
     --fs-400: calc(var(--fs-300) * var(--scale-fs));
@@ -70,7 +44,7 @@
     --fs-900: calc(var(--fs-800) * var(--scale-fs));
     --scale-pg: 1.333;
     --pg-50: calc(var(--pg-100) / 2);
-    --pg-100: calc(1rem / var(--scale-pg));
+    --pg-100: calc(0.945rem / var(--scale-pg));
     --pg-200: calc(var(--pg-100) * var(--scale-pg));
     --pg-300: calc(var(--pg-200) * var(--scale-pg));
     --pg-400: calc(var(--pg-300) * var(--scale-pg));
@@ -85,7 +59,7 @@
   * {
     --scale-fs: 1.333;
     --fs-50: calc(var(--fs-100) / 2);
-    --fs-100: calc(1rem / var(--scale-fs));
+    --fs-100: calc(0.99225rem / var(--scale-fs));
     --fs-200: calc(var(--fs-100) * var(--scale-fs));
     --fs-300: calc(var(--fs-200) * var(--scale-fs));
     --fs-400: calc(var(--fs-300) * var(--scale-fs));
@@ -96,7 +70,7 @@
     --fs-900: calc(var(--fs-800) * var(--scale-fs));
     --scale-pg: 1.333;
     --pg-50: calc(var(--pg-100) / 2);
-    --pg-100: calc(1rem / var(--scale-pg));
+    --pg-100: calc(0.99225rem / var(--scale-pg));
     --pg-200: calc(var(--pg-100) * var(--scale-pg));
     --pg-300: calc(var(--pg-200) * var(--scale-pg));
     --pg-400: calc(var(--pg-300) * var(--scale-pg));
@@ -111,8 +85,15 @@
 :root {
   margin: 0;
   padding: 0;
-  font-size: var(--pg-200);
+  font-size: var(--fs-200);
   -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+}
+
+html * {
+  max-height: 1000000px;
 }
 
 body {
@@ -285,7 +266,6 @@ input[type=button]:hover, input[type=submit]:hover {
 .car-record-container {
   margin-top: calc(var(--pg-400) * -1);
   display: grid;
-  font-size: var(--fs-100);
   gap: var(--pg-400);
 }
 .car-record-container .title-group {
@@ -329,11 +309,6 @@ input[type=button]:hover, input[type=submit]:hover {
 .car-record-container .item {
   display: grid;
   padding: var(--pg-50);
-}
-@media only screen and (min-width: 450px) {
-  .car-record-container {
-    font-size: var(--fs-200);
-  }
 }
 @media only screen and (min-width: 1000px) {
   .car-record-container {

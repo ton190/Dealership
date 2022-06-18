@@ -1,12 +1,16 @@
 using EntityLibrary;
 using FluentValidation;
-using ModelLibrary.Orders;
 
 namespace ModelLibrary.Records;
 
 public class RecordDto : RecordDtoBase, IMap<Record, RecordDto>
 {
-    public string FINCode { get; set; } = string.Empty;
+    private string finCode = string.Empty;
+    public string FINCode
+    {
+        get => finCode;
+        set => finCode = value.Trim();
+    }
     public List<PhoneDto> PhoneNumbers { get; set; } = new();
     public List<ContactNameDto> ContactNames { get; set; } = new();
 }

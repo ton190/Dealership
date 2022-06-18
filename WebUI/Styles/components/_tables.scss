@@ -1,9 +1,8 @@
 @use '../basic' as *;
 
 .car-record-container {
-        margin-top: calc(var(--pg-400) * -1);
+    margin-top: calc(var(--pg-400) * -1);
     display: grid;
-    font-size: fs(100);
     gap: pg(400);
 
     .title-group{
@@ -51,7 +50,6 @@
     }
 
     @include mq(sm){
-        font-size: fs(200);
     }
     @include mq(lg){
         margin-top: 0;

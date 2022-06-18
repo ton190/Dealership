@@ -12,6 +12,7 @@ public class SearchBase : ComponentBase
     [Inject] ILocalStorageService LocalStorage { get; set; } = null!;
     protected EditContext EditContext = null!;
     protected List<BrandDto>? Brands { get; set; }
+    protected string Error { get; set; } = "No Errors";
 
     protected override async Task OnInitializedAsync()
     {
@@ -39,7 +40,7 @@ public class SearchBase : ComponentBase
     protected async Task OnSubmit()
     {
         var model = (RecordSearchDto)EditContext.Model;
-        if(model is null) return;
+        if (model is null) return;
 
         var regexObj = new Regex(@"[^\d]");
         var numberString = regexObj.Replace(model.Phone.Number, "");
@@ -67,9 +68,8 @@ public class SearchBase : ComponentBase
 
         if (request is null || !request.Success || request.Response == null)
             NavManager.NavigateTo(UIRoutes.Error);
-        else{
+        else
             NavManager.NavigateTo(request.Response);
-        }
 
     }
 }

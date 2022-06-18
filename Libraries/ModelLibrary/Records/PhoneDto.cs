@@ -6,7 +6,12 @@ namespace ModelLibrary.Records;
 public class PhoneDto
     : BaseDto, IMap<Phone, PhoneDto>
 {
-    public string Number { get; set; } = string.Empty;
+    private string number = string.Empty;
+    public string Number
+    {
+        get => number;
+        set => number = value.Trim();
+    }
 }
 
 public class PhoneNumberDtoValidator

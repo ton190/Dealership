@@ -6,8 +6,18 @@ namespace ModelLibrary.Records;
 public class ContactNameDto
     : BaseDto, IMap<ContactName, ContactNameDto>
 {
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
+    private string firstName = string.Empty;
+    public string FirstName
+    {
+        get => firstName;
+        set => firstName = value.Trim();
+    }
+    private string lastName = string.Empty;
+    public string LastName
+    {
+        get => lastName;
+        set => lastName = value.Trim();
+    }
     public string FullName =>
         FirstName == "" && LastName == "" ? "" : FirstName + " " + LastName;
 }

@@ -58,6 +58,6 @@ public class GetAllRecordsHandler
                    + "," + x.BusinessAddress.PostalCode).ToLower().Contains(search)
                   select x;
 
-        return request;
+        return request.Distinct();
     }
 }

@@ -1,14 +1,13 @@
 @import 'mixins';
 @import 'colors';
 
-$font-base: 1rem;
-$padding-base: 1rem;
+$font-base: .9rem;
+$padding-base: .9rem;
 $scale-font: 1.333;
 $scale-padding: 1.333;
-$media-scale: 1;
+$media-scale: 1.05;
 
 $breakpoints: (
-    sm: 450px,
     md: 800px,
     lg: 1000px,
 );
@@ -29,8 +28,14 @@ $breakpoints: (
 :root{
     margin: 0;
     padding: 0;
-    font-size: pg(200);
+    font-size: fs(200);
     -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+}
+html * {
+    max-height:1000000px;
 }
 body{
     padding: 0;

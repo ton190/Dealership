@@ -12,20 +12,38 @@ public class GetAllOrdersHandler
     protected override IQueryable<Order> OnBefore(
         IQueryable<Order> request, GetAllOrdersModel model)
     {
+        if (string.IsNullOrEmpty(model.Search))
+        {
             request = from x in request
                       where x.Status != "unpaid"
-                      select x;
+                      select new Order
+                      {
+                          Id = x.Id,
+                          Status = x.Status,
+                          Email = x.Email,
+                          DateCreated = x.DateCreated,
+                          DateModified = x.DateModified
+                      };
+            return request;
+        }
 
-        if (string.IsNullOrEmpty(model.Search)) return request;
+        var search = model.Search.ToLower().Trim();
         var id = 0;
-        int.TryParse(model.Search, out id);
+        int.TryParse(search, out id);
 
         request = from x in request
                   where x.Id == id
-                  || x.Email.ToLower().Contains(model.Search.ToLower())
-                  || x.Status.Contains(model.Search.ToLower())
-                  select x;
+                  || x.Email.Contains(search)
+                  || x.Status.Contains(search)
+                  select new Order
+                  {
+                      Id = x.Id,
+                      Status = x.Status,
+                      Email = x.Email,
+                      DateCreated = x.DateCreated,
+                      DateModified = x.DateModified
+                  };
 
-        return request;
+        return request.Distinct();
     }
 }

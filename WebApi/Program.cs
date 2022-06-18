@@ -10,7 +10,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+/* app.UseHsts(); */
+/* app.UseHttpsRedirection(); */
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
@@ -19,7 +20,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseHttpsRedirection();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 

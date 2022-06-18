@@ -27,7 +27,7 @@ public class PaymentService : IPaymentService
     public async Task<Session?> CreateSession(
         string email)
     {
-        var baseUrl = "https://" + _http.HttpContext!.Request.Host.Value;
+        var baseUrl = "http://" + _http.HttpContext!.Request.Host.Value;
         string successUrl = baseUrl + UIRoutes.Orders.SearchResult;
         string cancelUrl = baseUrl + UIRoutes.Orders.Search;
 

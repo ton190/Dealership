@@ -7,7 +7,12 @@ namespace ModelLibrary.Brands;
 public class BrandDto
     : BaseDto, IMap<Brand, BrandDto>
 {
-    public string Name { get; set; } = string.Empty;
+    private string name =  string.Empty;
+    public string Name
+    {
+        get => name;
+        set => name = value.Trim();
+    }
     public virtual List<RecordDto> Records { get; set; } = new();
 }
 

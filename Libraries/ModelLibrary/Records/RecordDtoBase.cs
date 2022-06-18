@@ -4,7 +4,12 @@ namespace ModelLibrary.Records;
 
 public abstract class RecordDtoBase : BaseDto
 {
-    public string BusinessName { get; set; } = string.Empty;
+    private string businessName = string.Empty;
+    public string BusinessName
+    {
+        get => businessName;
+        set => businessName = value.Trim();
+    }
     public string Brand { get; set; } = string.Empty;
     public AddressDto BusinessAddress { get; set; } = new();
 }

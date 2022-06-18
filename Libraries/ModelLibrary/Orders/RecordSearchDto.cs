@@ -5,7 +5,12 @@ namespace ModelLibrary.Orders;
 
 public class RecordSearchDto : RecordDtoBase
 {
-    public string ClientEmail { get; set; } = string.Empty;
+    private string clientEmail = string.Empty;
+    public string ClientEmail
+    {
+        get => clientEmail;
+        set => clientEmail = value.Trim().ToLower();
+    }
     public ContactNameDto ContactName { get; set; } = new();
     public PhoneDto Phone { get; set; } = new();
 }
