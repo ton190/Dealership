@@ -11,9 +11,7 @@ public class OrdersController : BasicControllerBase
     private readonly IPaymentService _paymentService;
 
     public OrdersController(IPaymentService paymentService)
-    {
-        _paymentService = paymentService;
-    }
+        => _paymentService = paymentService;
 
     [HttpPost(ApiRoutes.Orders.Create)]
     public async Task<IActionResult> Create([FromBody] RecordSearchDto dto,

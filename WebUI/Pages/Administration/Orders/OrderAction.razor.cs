@@ -8,7 +8,6 @@ public class OrderActionBase : ComponentBase
 
     public void SetModel(OrderDto dto)
     {
-        Console.WriteLine("Model");
         Model = dto;
         StateHasChanged();
     }
